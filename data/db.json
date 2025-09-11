@@ -1,0 +1,361 @@
+{
+  "version": "1.0.0",
+  "scenes": [
+    {
+      "id": "scene-envelope",
+      "name": "封筒（紙）",
+      "description": "一般的な紙封筒。繊維の乱れや透過光での密度ムラ観察が有効。",
+      "notes": "教育用の標準的なクラフト封筒を想定。",
+      "refs": [
+        { "type": "article", "title": "封緘と改ざん痕の基礎", "url": "https://example.com/article/sealing-basics" }
+      ],
+      "images": [
+        { "src": "assets/envelope_front.jpg", "alt": "封筒の正面" },
+        { "src": "assets/envelope_oblique.jpg", "alt": "封筒の斜光観察例" }
+      ],
+      "meta": { "surface": "paper", "roughness": 0.6, "porosity": 0.7, "language": "ja" }
+    },
+    {
+      "id": "scene-cardboard",
+      "name": "段ボール箱",
+      "description": "波形構造のため表面が粗く、除去後の下地荒れが出やすい。",
+      "notes": "物流現場で最も多い対象。",
+      "refs": [
+        { "type": "article", "title": "段ボールと粘着剤の相性", "url": "https://example.com/article/cardboard-adhesive" }
+      ],
+      "images": [
+        { "src": "assets/cardboard_front.jpg", "alt": "段ボール表面" }
+      ],
+      "meta": { "surface": "cardboard", "roughness": 0.8, "porosity": 0.5, "language": "ja" }
+    },
+    {
+      "id": "scene-device",
+      "name": "機器筐体（金属/樹脂）",
+      "description": "平滑面で再貼付が目立ちにくい一方、溶剤痕や微小気泡が検出ポイント。",
+      "notes": "保守口の封印や保証シールを想定。",
+      "refs": [],
+      "images": [
+        { "src": "assets/device_panel.jpg", "alt": "機器パネル面" }
+      ],
+      "meta": { "surface": "plastic-metal", "roughness": 0.2, "porosity": 0.1, "language": "ja" }
+    }
+  ],
+  "seals": [
+    {
+      "id": "seal-void",
+      "type": "VOID",
+      "name": "VOIDパターンシール",
+      "summary": "剥がすと「VOID/OPENED」文字が残る使い捨て型。",
+      "strengths": ["再接着が極めて困難", "視認性の高い改ざん痕"],
+      "weaknesses": ["シールごと完全除去されると痕跡も消える", "温度条件で粘着挙動が変わる場合あり"],
+      "common_uses": "物流封印、機器の保守口封印、検査済み封印",
+		"refs": [
+			{
+			"type": "article",
+			"title": "What Are Void Labels? (TritonStore Blog)",
+			"url": "https://tritonstore.com.au/what-are-void-labels/"
+			},
+			{
+			"type": "manufacturer page",
+			"title": "3M VOID Polyester Label Material",
+			"url": "https://www.3m.com/3M/en_US/p/d/v000176409/"
+			},
+			{
+			"type": "manufacturer page",
+			"title": "Lintec Non-Transfer VOID Security Label Material",
+			"url": "https://www.lintec.co.jp/topics/newsrelease/171017_a.html"
+			}
+		],
+		"images": [
+		],
+      "meta": { "hasSerial": true, "hasMicroprint": true, "thickness": 0.08, "adhesive": "acrylic" }
+    },
+	{
+	"id": "seal-holo",
+	"type": "HOLOGRAM",
+	"name": "ホログラムシール",
+	"summary": "光の回折・干渉で模様が変化する偽造防止シール。",
+	"strengths": ["視覚的に真正性確認が容易", "コピーが難しい", "角度依存で認証可能"],
+	"weaknesses": ["カットして再貼付可能", "低品質な模倣シールが流通する", "利用者教育が必要"],
+	"common_uses": "保証封印、認証ステッカー、化粧品や医薬品のパッケージ、会員証など",
+	"refs": [
+		{
+		"type": "industry article",
+		"title": "What is Secure Hologram Technology? (OVD Kinegram)",
+		"url": "https://www.kinegram.com/events-insights/details/what-is-secure-hologram-technology"
+		},
+		{
+		"type": "web article (Japanese)",
+		"title": "ホログラムシールとは？特徴や使用用途・メリットを紹介",
+		"url": "https://www.seal-koubou.com/lab/detail/65"
+		},
+		{
+		"type": "manufacturer page",
+		"title": "偽造防止・ホログラム | 認証・セキュリティ (DNP 大日本印刷)",
+		"url": "https://www.dnp.co.jp/biz/products/subtag/20171587_4961.html"
+		},
+		{
+		"type": "academic paper",
+		"title": "Tamper-proof markings for high-value metal goods (Optics Express, 2017)",
+		"url": "https://doi.org/10.1364/OE.25.015216"
+		}
+	],
+	"images": [
+		{
+		"src": "https://www.nip-image.com/upload/image/20181204/1543918772112747.jpg",
+		"alt": "VOIDメッセージを残すホログラムシール"
+		},
+		{
+		"src": "https://holdings.toppan.com/ja/news/2022/06/sto3as0000007kmx-img/TOPPAN_220629_1_img2.jpg",
+		"alt": "TOPPANのIllumigramで光を当てると現れるOKパターン"
+		}
+	],
+	"meta": { "hasSerial": false, "hasMicroprint": true }
+	},
+    {
+      "id": "seal-paper",
+      "type": "PAPER",
+      "name": "紙封緘シール",
+      "summary": "一度剥がすと破れやすく再利用が難しい紙素材の封緘。",
+      "strengths": ["破断で改ざん痕が残る", "低コスト"],
+      "weaknesses": ["水蒸気や溶剤で糊が緩む場合あり", "完全除去で「貼付の事実」が消える"],
+      "common_uses": "公文書封緘、郵送封印",
+      "refs": [],
+      "images": [
+      ],
+      "meta": { "hasSerial": false, "hasMicroprint": false, "thickness": 0.1, "adhesive": "water-based" }
+    },
+    {
+      "id": "seal-clear-tape",
+      "type": "CLEAR",
+      "name": "透明テープ（番号なし）",
+      "summary": "一般的な透明テープ。低コストだが抑止力は限定的。",
+      "strengths": ["入手容易", "視認性が高く貼りやすい"],
+      "weaknesses": ["温風で剥がし再貼付が可能になりやすい", "連番なし＝追跡困難"],
+      "common_uses": "簡易封印、仮止め",
+      "refs": [],
+      "images": [],
+      "meta": { "hasSerial": false, "hasMicroprint": false, "thickness": 0.05, "adhesive": "rubber" }
+    },
+    {
+      "id": "seal-serial-tape",
+      "type": "SERIAL_TAPE",
+      "name": "連番入りセキュリティテープ",
+      "summary": "印字連番で追跡できるテープ型封印。",
+      "strengths": ["連番照合で一致/不一致を判定", "運用ログと組み合わせやすい"],
+      "weaknesses": ["連番を調達できる内部不正には弱い", "位置ズレや段差の検査が必須"],
+      "common_uses": "倉庫封印、輸送シール",
+      "refs": [
+        { "type": "article", "title": "連番管理の運用例", "url": "https://example.com/serial/ops" }
+      ],
+      "images": [
+      ],
+      "meta": { "hasSerial": true, "hasMicroprint": false, "thickness": 0.07, "adhesive": "acrylic" }
+    }
+  ],
+  "attacks": [
+	{
+		"id": "atk-full-remove",
+		"name": "完全除去（削ぎ取り/溶剤/下地処理）",
+		"description": "シールと接着剤を含め、下地から痕跡ごと取り去る。",
+		"expected_effect": "「最初から無かった」見た目に近づくが、下地の荒れや密度ムラが残りやすい。",
+		"characteristics": {
+			"cost": 3,
+			"time": 4,
+			"skill": 3,
+			"traces": 4
+		},
+		"refs": [
+			{
+			"type": "article",
+			"title": "Tamper-Evident Technology (Wikipedia)",
+			"url": "https://en.wikipedia.org/wiki/Tamper-evident_technology"
+			},
+			{
+			"type": "paper",
+			"title": "Tamper-Indicating Seals: Practices, Problems, and Standards (Johnston, 2003)",
+			"url": "https://digital.library.unt.edu/ark:/67531/metadc933842/"
+			}
+		],
+		"images": []
+	},
+    {
+      "id": "atk-same-reapply",
+      "name": "同一シール再貼付（同ロット/連番一致）",
+      "description": "同じロット・同一連番のシールを用意して貼り直す。",
+      "expected_effect": "正面は自然でも、斜光/マクロでエッジ段差や接着ムラが露見。",
+      "characteristics": {
+        "cost": 4,
+        "time": 2,
+        "skill": 4,
+        "traces": 2
+      },
+      "refs": [],
+      "images": []
+    },
+    {
+      "id": "atk-heat-peel",
+      "name": "温風で剥がし再接着",
+      "description": "ドライヤーなどで粘着を弱め、ゆっくり剥がして再接着。",
+      "expected_effect": "透明テープ等では微小気泡/歪みが出やすい。",
+      "characteristics": {
+        "cost": 1,
+        "time": 2,
+        "skill": 1,
+        "traces": 2
+      },
+      "refs": [],
+      "images": []
+    },
+    {
+      "id": "atk-partial-cut",
+      "name": "部分カット（切り欠き→再配置）",
+      "description": "目立たない位置でカットし、内容にアクセス後に再配置。",
+      "expected_effect": "カットラインの段差や光沢差、位置ズレが検出ポイント。",
+      "characteristics": {
+        "cost": 1,
+        "time": 3,
+        "skill": 3,
+        "traces": 3
+      },
+      "refs": [],
+      "images": []
+    },
+    {
+      "id": "atk-solvent-soften",
+      "name": "溶剤で糊を緩める",
+      "description": "IPA等で粘着を一時的に弱めて剥離を容易にする。",
+      "expected_effect": "溶剤痕や表面の艶変化が残る場合あり。",
+      "characteristics": {
+        "cost": 2,
+        "time": 2,
+        "skill": 2,
+        "traces": 3
+      },
+      "refs": [],
+      "images": []
+    },
+    {
+      "id": "atk-surface-disguise",
+      "name": "下地偽装（研磨/清掃→新規貼付）",
+      "description": "除去後に表面を整えてから新しいシールを貼る。",
+      "expected_effect": "基準写真比較や斜光で不整合が露見。",
+      "characteristics": {
+        "cost": 3,
+        "time": 4,
+        "skill": 3,
+        "traces": 3
+      },
+      "refs": [],
+      "images": []
+    }
+  ],
+  "inspections": [
+    {
+      "id": "insp-oblique",
+      "name": "斜光観察",
+      "howto": "浅い角度の光で表面段差/気泡/歪みを強調する。",
+      "detects": ["edge_step", "micro_bubbles", "warp"],
+      "refs": [],
+      "images": [
+        { "src": "assets/oblique_example.jpg", "alt": "斜光で段差が見える例" }
+      ]
+    },
+    {
+      "id": "insp-baseline-compare",
+      "name": "基準写真比較",
+      "howto": "貼付直後の写真と位置・角度を合わせて比較する。",
+      "detects": ["position_delta", "rotation_delta", "texture_change"],
+      "refs": [],
+      "images": []
+    },
+    {
+      "id": "insp-serial-check",
+      "name": "連番照合",
+      "howto": "運用ログと照合し、連番の一致/不一致を確認する。",
+      "detects": ["serial_mismatch", "unexpected_batch"],
+      "refs": [
+        { "type": "article", "title": "連番管理の設計指針", "url": "https://example.com/serial/design" }
+      ],
+      "images": []
+    },
+    {
+      "id": "insp-macro",
+      "name": "マクロ観察（エッジ/繊維/接着ムラ）",
+      "howto": "拡大レンズでエッジ段差や粘着剤のムラ、紙繊維の乱れを確認。",
+      "detects": ["edge_step", "adhesive_variation", "fiber_disorder"],
+      "refs": [],
+      "images": [
+        { "src": "assets/macro_edge.jpg", "alt": "エッジのマクロ観察例" }
+      ]
+    },
+    {
+      "id": "insp-transmitted",
+      "name": "透過光観察（紙系）",
+      "howto": "薄い紙素材を透過光で観察し、密度ムラや剥離跡を確認。",
+      "detects": ["density_variation", "lift_marks"],
+      "refs": [],
+      "images": []
+    },
+    {
+      "id": "insp-uv",
+      "name": "UV/IR 観察",
+      "howto": "蛍光インクやマイクロ印刷の有無、汚染痕を確認。",
+      "detects": ["microprint_presence", "contamination_traces"],
+      "refs": [],
+      "images": []
+    }
+  ],
+  "scenarios": [
+		{
+	"id": "scn-void-fullremove-reapply",
+	"title": "VOID → 完全除去 → 同一VOID再貼付（連番一致）",
+	"scene": "scene-envelope",
+	"seal": "seal-void",
+	"attackSequence": ["atk-full-remove", "atk-same-reapply"],
+	"recommendedInspections": ["insp-oblique", "insp-baseline-compare", "insp-macro"],
+	"lesson": "「連番一致＝未改ざん」は誤信。位置ズレ・段差・質感ムラで検証。",
+	"refs": [
+		{
+		"type": "article",
+		"title": "Common Applications of Tamper-Evident VOID Labels",
+		"url": "https://tritonstore.com.au/what-are-void-labels/"
+		}
+	],
+	"images": []
+	},
+    {
+      "id": "scn-paper-remove-new",
+      "title": "紙封緘 → 完全除去 → 新規貼付",
+      "scene": "scene-envelope",
+      "seal": "seal-paper",
+      "attackSequence": ["atk-full-remove", "atk-surface-disguise"],
+      "recommendedInspections": ["insp-transmitted", "insp-oblique", "insp-baseline-compare"],
+      "lesson": "「貼ってあった事実」ごと消される。透過光と基準写真で検出率向上。",
+      "refs": [],
+      "images": []
+    },
+    {
+      "id": "scn-clear-heat-reseal",
+      "title": "透明テープ → 温風で剥がし再接着",
+      "scene": "scene-device",
+      "seal": "seal-clear-tape",
+      "attackSequence": ["atk-heat-peel"],
+      "recommendedInspections": ["insp-oblique", "insp-macro"],
+      "lesson": "低コストテープは抑止力が低い。微小気泡/歪みを斜光とマクロで確認。",
+      "refs": [],
+      "images": []
+    },
+    {
+      "id": "scn-serial-tape-insider",
+      "title": "連番テープ → 内部流出シナリオ（同一連番で再封印）",
+      "scene": "scene-cardboard",
+      "seal": "seal-serial-tape",
+      "attackSequence": ["atk-same-reapply"],
+      "recommendedInspections": ["insp-baseline-compare", "insp-oblique", "insp-serial-check"],
+      "lesson": "連番一致でも位置・角度・エッジ段差を検査。連番ログと照合が必須。",
+      "refs": [],
+      "images": []
+    }
+  ]
+}

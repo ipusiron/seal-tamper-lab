@@ -1,0 +1,714 @@
+/* ===== 基本（ライトモード固定） ===== */
+:root{
+  --bg: #ffffff;
+  --text: #111827;        /* #111 */
+  --muted: #6b7280;       /* #666～#777 */
+  --line: #e5e7eb;        /* 枠線 */
+  --line-soft: #f3f4f6;   /* スケルトン等 */
+  --link: #2563eb;
+  --link-hover: #1d4ed8;
+  --btn-line: #d1d5db;
+  --btn-hover: #f9fafb;
+  --danger-bg: #fef2f2;
+  --danger-border: #fca5a5;
+  --danger-text: #7f1d1d;
+  --radius: 12px;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+  line-height: 1.6;
+}
+
+/* ===== ヘッダー ===== */
+.site-header {
+  padding: 16px;
+  border-bottom: 1px solid var(--line);
+  text-align: center;
+}
+.site-header h1 {
+  margin: 0 0 4px 0;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text);
+}
+.subtitle {
+  margin: 0;
+  font-size: 16px;
+  color: #555;
+}
+
+/* ===== コンテナ ===== */
+.container {
+  max-width: 940px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+/* ===== ステッパー ===== */
+.stepper {
+  list-style: none;
+  display: flex;
+  gap: 8px;
+  padding: 0;
+  margin: 0 0 12px 0;
+  flex-wrap: wrap;
+}
+.stepper li {
+  border: 2px solid #d1d5db;
+  border-radius: 9999px;
+  padding: 4px 10px;
+  font-size: 13px;
+  color: #6b7280;
+  background: #f9fafb;
+  font-weight: 500;
+}
+.stepper li.active {
+  color: #fff;
+  background: #2563eb;
+  border-color: #2563eb;
+  font-weight: 600;
+}
+
+/* ===== アコーディオン ===== */
+.accordion { border: 1px solid var(--line); border-radius: var(--radius); margin-bottom: 12px; background: #fff; }
+.acc-header {
+  width: 100%;
+  background: #fff;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  padding: 12px 14px;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  cursor: pointer;
+}
+.acc-title { font-weight: 700; color: var(--text); }
+.acc-summary { 
+  color: #059669; 
+  font-size: 14px; 
+  font-weight: 500;
+  margin-left: 12px; 
+  background: #f0fdf4;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid #bbf7d0;
+  max-width: 60%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.acc-summary:empty {
+  display: none;
+}
+
+.acc-summary.empty {
+  color: #9ca3af;
+  background: #f9fafb;
+  border-color: #e5e7eb;
+  font-style: italic;
+}
+.acc-panel { padding: 12px; }
+
+.card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px;
+}
+.card.muted { background: #fff; border-style: dashed; color: var(--muted); }
+
+.hint { color: var(--muted); margin: 0 0 10px 0; }
+
+/* ===== フィールド ===== */
+.field { display: grid; grid-template-columns: 120px 1fr; align-items: center; gap: 10px; margin-bottom: 10px; }
+.field > span { color: var(--text); font-weight: 600; }
+select {
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid var(--btn-line);
+  background: #fff;
+  padding: 0 10px;
+}
+
+/* ===== ボタン・ナビ ===== */
+.nav-row { display: flex; gap: 8px; margin-top: 12px; }
+.btn {
+  border: 1px solid var(--btn-line);
+  background: #fff;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+.btn:hover { background: var(--btn-hover); }
+.btn:disabled, .btn.disabled { 
+  opacity: .45; 
+  cursor: not-allowed; 
+  background: #f3f4f6;
+  color: #9ca3af;
+}
+
+/* ===== ピル（選択要約） ===== */
+.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip {
+  border: 1px solid var(--line);
+  border-radius: 9999px;
+  padding: 4px 8px;
+  font-size: 12px;
+  background: #fff;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.chip .x {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* ===== 追加情報（強み・弱み等） ===== */
+.extras { margin-top: 8px; }
+.extras ul { margin: 6px 0 0 18px; }
+.extras .meta { font-size: 13px; color: var(--muted); }
+
+/* ===== 結果・アクション ===== */
+.result-body p { margin: 0 0 8px 0; }
+.actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.inline-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 10px;
+  margin-top: 10px;
+}
+.inline-card h4 { margin: 0 0 6px 0; }
+.inline-list { margin: 0; padding-left: 18px; }
+.inline-list li { margin: 4px 0; }
+
+/* ===== フッター ===== */
+.site-footer { border-top: 1px solid var(--line); margin-top: 24px; }
+.footer { padding: 12px 16px; text-align: center; }
+.footer a { color: var(--link); text-decoration: underline; }
+.footer a:hover { color: var(--link-hover); }
+
+/* ===== カード選択UI（シーン・シール・攻撃共通） ===== */
+.scene-card-grid,
+.seal-card-grid,
+.attack-card-grid,
+.inspection-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+  margin: 12px 0;
+}
+
+.scene-card,
+.seal-card,
+.attack-card,
+.inspection-card {
+  border: 2px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #fff;
+  text-align: center;
+  position: relative;
+}
+
+.scene-card:hover,
+.seal-card:hover,
+.attack-card:hover,
+.inspection-card:hover {
+  border-color: var(--btn-line);
+  background: var(--btn-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.scene-card.selected,
+.seal-card.selected {
+  border-color: var(--link);
+  background: #eff6ff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.attack-card.selected,
+.inspection-card.selected {
+  border-color: #dc2626;
+  background: #fef2f2;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+.scene-visual,
+.seal-visual,
+.attack-visual,
+.inspection-visual {
+  height: 80px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 攻撃手法視覚表現 */
+.attack-visual.full-remove {
+  background: linear-gradient(135deg, #fee2e2, #fca5a5);
+  border: 2px solid #dc2626;
+}
+
+.attack-visual.full-remove::before {
+  content: "🗑️";
+  font-size: 32px;
+}
+
+.attack-visual.reapply {
+  background: linear-gradient(135deg, #fef3c7, #f59e0b);
+  border: 2px solid #d97706;
+}
+
+.attack-visual.reapply::before {
+  content: "🔄";
+  font-size: 32px;
+}
+
+.attack-visual.heat {
+  background: linear-gradient(135deg, #fed7d7, #f56565);
+  border: 2px solid #e53e3e;
+  animation: heat-pulse 2s ease-in-out infinite;
+}
+
+.attack-visual.heat::before {
+  content: "🔥";
+  font-size: 32px;
+}
+
+@keyframes heat-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.attack-visual.cut {
+  background: linear-gradient(135deg, #e0e7ff, #8b5cf6);
+  border: 2px solid #7c3aed;
+}
+
+.attack-visual.cut::before {
+  content: "✂️";
+  font-size: 32px;
+}
+
+.attack-visual.solvent {
+  background: linear-gradient(135deg, #d1fae5, #34d399);
+  border: 2px solid #10b981;
+}
+
+.attack-visual.solvent::before {
+  content: "🧪";
+  font-size: 32px;
+}
+
+.attack-visual.disguise {
+  background: linear-gradient(135deg, #f3e8ff, #a78bfa);
+  border: 2px solid #8b5cf6;
+}
+
+.attack-visual.disguise::before {
+  content: "🎭";
+  font-size: 32px;
+}
+
+/* 検査手法視覚表現 */
+.inspection-visual.oblique {
+  background: linear-gradient(135deg, #e0f2fe, #0284c7);
+  border: 2px solid #0369a1;
+}
+
+.inspection-visual.oblique::before {
+  content: "💡";
+  font-size: 32px;
+}
+
+.inspection-visual.reference {
+  background: linear-gradient(135deg, #f3e8ff, #7c3aed);
+  border: 2px solid #6d28d9;
+}
+
+.inspection-visual.reference::before {
+  content: "📷";
+  font-size: 32px;
+}
+
+.inspection-visual.serial-check {
+  background: linear-gradient(135deg, #fef7cd, #eab308);
+  border: 2px solid #ca8a04;
+}
+
+.inspection-visual.serial-check::before {
+  content: "🔢";
+  font-size: 32px;
+}
+
+.inspection-visual.microscope {
+  background: linear-gradient(135deg, #ecfdf5, #10b981);
+  border: 2px solid #059669;
+}
+
+.inspection-visual.microscope::before {
+  content: "🔬";
+  font-size: 32px;
+}
+
+.inspection-visual.fluorescent {
+  background: linear-gradient(135deg, #fdf4ff, #c026d3);
+  border: 2px solid #a21caf;
+}
+
+.inspection-visual.fluorescent::before {
+  content: "⚡";
+  font-size: 32px;
+}
+
+.inspection-visual.fingerprint {
+  background: linear-gradient(135deg, #f1f5f9, #64748b);
+  border: 2px solid #475569;
+}
+
+.inspection-visual.fingerprint::before {
+  content: "👆";
+  font-size: 32px;
+}
+
+.inspection-visual.transmitted {
+  background: linear-gradient(135deg, #fefce8, #facc15);
+  border: 2px solid #eab308;
+}
+
+.inspection-visual.transmitted::before {
+  content: "🔍";
+  font-size: 32px;
+}
+
+/* シーン視覚表現 */
+.scene-visual.envelope {
+  background: linear-gradient(to bottom, #fef3c7, #fbbf24);
+  border: 2px solid #92400e;
+  position: relative;
+}
+
+.scene-visual.envelope::before {
+  content: "✉️";
+  font-size: 40px;
+  opacity: 0.8;
+}
+
+
+.scene-visual.cardboard {
+  background: 
+    linear-gradient(45deg, #8b5a2b 25%, transparent 25%),
+    linear-gradient(-45deg, #8b5a2b 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #8b5a2b 75%),
+    linear-gradient(-45deg, transparent 75%, #8b5a2b 75%),
+    #d2691e;
+  background-size: 16px 16px;
+  background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+  border: 2px solid #8b4513;
+}
+
+.scene-visual.cardboard::before {
+  content: "📦";
+  font-size: 40px;
+  filter: sepia(0.5) contrast(1.2);
+}
+
+.scene-visual.device {
+  background: linear-gradient(135deg, #e5e7eb, #f3f4f6, #d1d5db);
+  border: 2px solid #6b7280;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.scene-visual.device::before {
+  content: "🖥️";
+  font-size: 36px;
+  opacity: 0.9;
+}
+
+/* VOIDシール視覚表現 */
+.seal-visual.void {
+  background: linear-gradient(45deg, 
+    transparent 25%, 
+    #dc2626 25%, #dc2626 27%, 
+    transparent 27%, transparent 75%, 
+    #dc2626 75%, #dc2626 77%, 
+    transparent 77%);
+  background-size: 20px 20px;
+  border: 2px dashed #dc2626;
+}
+
+.seal-visual.void::after {
+  content: "VOID";
+  position: absolute;
+  font-weight: bold;
+  font-size: 24px;
+  color: #dc2626;
+  opacity: 0.3;
+  transform: rotate(-15deg);
+}
+
+/* ホログラムシール視覚表現 */
+.seal-visual.hologram {
+  background: linear-gradient(135deg, 
+    #f0f 0%, #0ff 25%, #ff0 50%, #0f0 75%, #f0f 100%);
+  opacity: 0.8;
+  animation: hologram-shift 3s ease-in-out infinite;
+}
+
+.seal-visual.hologram::after {
+  content: "✨";
+  position: absolute;
+  font-size: 32px;
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+@keyframes hologram-shift {
+  0%, 100% { filter: hue-rotate(0deg); }
+  50% { filter: hue-rotate(180deg); }
+}
+
+@keyframes sparkle {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.2) rotate(180deg); }
+}
+
+/* 紙封緘シール視覚表現 */
+.seal-visual.paper {
+  background: #fef3c7;
+  border: 2px solid #92400e;
+  position: relative;
+}
+
+.seal-visual.paper::before {
+  content: "";
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #dc2626, #7f1d1d);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.seal-visual.paper::after {
+  content: "印";
+  position: absolute;
+  color: #fff;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+/* 連番入りセキュリティテープ視覚表現 */
+.seal-visual.serial {
+  background: linear-gradient(to bottom, 
+    rgba(230,230,250,0.9) 0%, 
+    rgba(255,255,255,0.7) 50%, 
+    rgba(230,230,250,0.9) 100%);
+  border: 2px solid #6366f1;
+  border-style: dashed solid;
+  position: relative;
+  overflow: hidden;
+}
+
+.seal-visual.serial::before {
+  content: "SEC-12345";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-5deg);
+  font-family: monospace;
+  font-size: 12px;
+  font-weight: bold;
+  color: #4338ca;
+  background: rgba(255,255,255,0.8);
+  padding: 2px 6px;
+  border-radius: 3px;
+  border: 1px solid #c7d2fe;
+}
+
+.seal-visual.serial::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 200%;
+  height: 2px;
+  background: repeating-linear-gradient(
+    90deg,
+    #6366f1 0px,
+    #6366f1 4px,
+    transparent 4px,
+    transparent 8px
+  );
+  animation: tape-move 4s linear infinite;
+}
+
+@keyframes tape-move {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0%); }
+}
+
+/* 透明テープ視覚表現 */
+.seal-visual.transparent {
+  background: linear-gradient(135deg, 
+    rgba(255,255,255,0.95) 0%, 
+    rgba(245,245,245,0.3) 50%, 
+    rgba(255,255,255,0.95) 100%);
+  border: 1px solid #e5e7eb;
+  box-shadow: 
+    inset 0 1px 3px rgba(0,0,0,0.05),
+    0 1px 3px rgba(0,0,0,0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.seal-visual.transparent::before {
+  content: "📦";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  opacity: 0.4;
+}
+
+.seal-visual.transparent::after {
+  content: "";
+  position: absolute;
+  top: 15%;
+  left: 15%;
+  width: 70%;
+  height: 70%;
+  background: linear-gradient(45deg, 
+    transparent 40%, 
+    rgba(255,255,255,0.9) 50%, 
+    transparent 60%);
+  animation: shine 3s ease-in-out infinite;
+}
+
+@keyframes shine {
+  0% { transform: translateX(-100%) rotate(15deg); }
+  100% { transform: translateX(100%) rotate(15deg); }
+}
+
+.scene-card-title,
+.seal-card-title,
+.attack-card-title,
+.inspection-card-title {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.scene-card-desc,
+.seal-card-desc,
+.attack-card-desc,
+.inspection-card-desc {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+
+/* 攻撃特徴表示エリア */
+.attack-characteristics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line-soft);
+  /* グリッドコンテナを明確に定義 */
+  justify-items: center;
+}
+
+.attack-characteristic {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 10px;
+  position: relative;
+  /* 確実な位置基準設定 */
+  width: 100%;
+  /* 最小幅を設定してレイアウトを安定化 */
+  min-width: 30px;
+}
+
+.characteristic-icon {
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.characteristic-value {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 12px;
+}
+
+/* 攻撃セクション全体の特徴説明ヘッダー */
+.attack-characteristics-header {
+  margin-bottom: 12px;
+  padding: 6px 12px;
+  background: #f8fafc;
+  border-radius: 6px;
+  font-size: 11px;
+  line-height: 1.3;
+  color: #64748b;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* 個別カード内の特徴説明ヘッダー（削除予定） */
+.characteristics-header {
+  margin-bottom: 6px;
+  padding: 4px 6px;
+  background: #f8fafc;
+  border-radius: 4px;
+  font-size: 9px;
+  line-height: 1.2;
+  color: #64748b;
+  text-align: center;
+}
+
+.characteristics-labels {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  font-size: 8px;
+  color: #64748b;
+  margin-bottom: 4px;
+}
+
+.characteristic-label {
+  text-align: center;
+  font-weight: 500;
+}
+
+/* ===== レスポンシブ ===== */
+@media (max-width: 640px){
+  .field { grid-template-columns: 1fr; }
+  .scene-card-grid,
+  .seal-card-grid,
+  .attack-card-grid,
+  .inspection-card-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+}

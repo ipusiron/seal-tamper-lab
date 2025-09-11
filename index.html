@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Seal Tamper Lab</title>
+  <meta name="description" content="封印シールの脆弱性と検知技術を学ぶ教育ツール" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'none';">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <h1>Seal Tamper Lab</h1>
+    <p class="subtitle">封印シールの脆弱性と検知技術を学ぶ教育ツール</p>
+  </header>
+
+  <main id="app" class="container">
+    <!-- ステップインジケータ -->
+    <ol class="stepper" aria-label="進行ステップ">
+      <li class="active" data-step="1">シーン</li>
+      <li data-step="2">シール</li>
+      <li data-step="3">攻撃</li>
+      <li data-step="4">検査</li>
+      <li data-step="5">結果</li>
+    </ol>
+
+    <!-- ステップ1：シーン -->
+    <section class="accordion" id="step-1" data-step="1">
+      <button class="acc-header" aria-expanded="true" aria-controls="panel-1">
+        <span class="acc-title">ステップ1：シーン選択</span>
+        <span class="acc-summary" id="summary-scene"></span>
+      </button>
+      <div id="panel-1" class="acc-panel">
+        <div class="card">
+          <p class="hint">封筒・段ボール・機器筐体など、対象物の表面特性を選びます。</p>
+          <div id="scene-cards" class="scene-card-grid" role="radiogroup" aria-label="シーンを選択">
+            <!-- カード型UIがJavaScriptで動的に生成される -->
+          </div>
+        </div>
+
+        <div class="nav-row">
+          <button class="btn next" id="next-1">次へ（シール）</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ステップ2：シール -->
+    <section class="accordion" id="step-2" data-step="2">
+      <button class="acc-header" aria-expanded="false" aria-controls="panel-2">
+        <span class="acc-title">ステップ2：シール選択</span>
+        <span class="acc-summary" id="summary-seal"></span>
+      </button>
+      <div id="panel-2" class="acc-panel" hidden>
+        <div class="card">
+          <p class="hint">VOID、ホログラム、紙封緘、透明テープなどから選びます。</p>
+          <div id="seal-cards" class="seal-card-grid" role="radiogroup" aria-label="シールを選択">
+            <!-- カード型UIがJavaScriptで動的に生成される -->
+          </div>
+          <div id="seal-extras" class="extras"></div>
+        </div>
+
+        <div class="nav-row">
+          <button class="btn prev" id="prev-2">戻る</button>
+          <button class="btn next" id="next-2">次へ（攻撃）</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ステップ3：攻撃 -->
+    <section class="accordion" id="step-3" data-step="3">
+      <button class="acc-header" aria-expanded="false" aria-controls="panel-3">
+        <span class="acc-title">ステップ3：攻撃（Tampering）</span>
+        <span class="acc-summary" id="summary-attacks"></span>
+      </button>
+      <div id="panel-3" class="acc-panel" hidden>
+        <div class="card">
+          <p class="hint">完全除去・同一シール再貼付・部分カットなどを選択（複数可）。<br>コスト・時間・技術・痕跡レベル（1=低、5=高）</p>
+          <div id="attack-cards" class="attack-card-grid" role="group" aria-label="攻撃手法を選択（複数可）">
+            <!-- カード型UIがJavaScriptで動的に生成される -->
+          </div>
+          <div id="attack-chips" class="chips" aria-live="polite"></div>
+        </div>
+
+        <div class="nav-row">
+          <button class="btn prev" id="prev-3">戻る</button>
+          <button class="btn next" id="next-3">次へ（検査）</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ステップ4：検査 -->
+    <section class="accordion" id="step-4" data-step="4">
+      <button class="acc-header" aria-expanded="false" aria-controls="panel-4">
+        <span class="acc-title">ステップ4：検査（Inspection）</span>
+        <span class="acc-summary" id="summary-inspections"></span>
+      </button>
+      <div id="panel-4" class="acc-panel" hidden>
+        <div class="card">
+          <p class="hint">斜光観察・基準写真比較・連番照合などを選択（複数可）。</p>
+          <div id="inspection-cards" class="inspection-card-grid" role="group" aria-label="検査手法を選択（複数可）">
+            <!-- カード型UIがJavaScriptで動的に生成される -->
+          </div>
+          <div id="inspection-chips" class="chips" aria-live="polite"></div>
+        </div>
+
+        <div class="nav-row">
+          <button class="btn prev" id="prev-4">戻る</button>
+          <button class="btn next" id="next-4">次へ（結果）</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ステップ5：結果・解説 -->
+    <section class="accordion" id="step-5" data-step="5">
+      <button class="acc-header" aria-expanded="false" aria-controls="panel-5">
+        <span class="acc-title">ステップ5：結果・解説</span>
+        <span class="acc-summary" id="summary-result"></span>
+      </button>
+      <div id="panel-5" class="acc-panel" hidden>
+        <div id="result-card" class="card">
+          <div id="result-body" class="result-body">
+            <p class="hint">上のステップで選択すると、ここに解説が表示されます。</p>
+          </div>
+
+          <div class="actions" id="result-actions"></div>
+
+          <!-- インライン展開領域（ボタン押下時のみ表示） -->
+          <div id="inline-refs"></div>
+          <div id="inline-images"></div>
+        </div>
+
+        <div class="nav-row">
+          <button class="btn prev" id="prev-5">戻る</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 初期ガイド（DB未読込時の空表示） -->
+    <section id="starter-guide" class="card muted">
+      <h3>使い方ミニガイド</h3>
+      <ol>
+        <li>シーンを選ぶ（封筒・箱など）</li>
+        <li>シールを選ぶ（VOID・ホログラム・紙封緘・透明テープなど）</li>
+        <li>攻撃を選ぶ（完全除去・再貼付など）</li>
+        <li>検査を選ぶ（斜光・基準写真比較・連番照合など）</li>
+        <li>結果・解説で学びポイントを確認</li>
+      </ol>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer">
+      🔗 GitHubリポジトリはこちら（
+      <a href="https://github.com/ipusiron/seal-tamper-lab" target="_blank" rel="noopener noreferrer">
+        ipusiron/seal-tamper-lab
+      </a> ）
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
