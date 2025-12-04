@@ -1,11 +1,34 @@
 <!--
 ---
-title: Seal Tamper Lab
-category: physical-security
-difficulty: 1
-description: Educational tool to learn the vulnerabilities and detection techniques of tamper-evident seals
-tags: [seal, tamper, security, education, physical security]
-demo: https://ipusiron.github.io/seal-tamper-lab/
+id: day061
+slug: seal-tamper-lab
+
+title: "Seal Tamper Lab"
+
+subtitle_ja: "封印シールのセキュリティ教育ツール"
+subtitle_en: "Educational Tool for Tamper-Evident Seal Security"
+
+description_ja: "封印シールの脆弱性と検知技術をインタラクティブに学ぶ教育ツール。改ざん手法と検査方法のシミュレーションを通じて、物理セキュリティのリテラシーを養います。"
+description_en: "An interactive educational tool for learning tamper-evident seal vulnerabilities and detection techniques. Build physical security literacy through simulation of tampering methods and inspection procedures."
+
+category_ja:
+  - 物理セキュリティ
+category_en:
+  - Physical Security
+
+difficulty: 2
+
+tags:
+  - seal
+  - tamper-evident
+  - physical-security
+  - education
+  - simulation
+
+repo_url: "https://github.com/ipusiron/seal-tamper-lab"
+demo_url: "https://ipusiron.github.io/seal-tamper-lab/"
+
+hub: true
 ---
 -->
 
