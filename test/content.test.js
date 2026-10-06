@@ -77,3 +77,13 @@ test("README states actual limits and unsupported file protocol", () => {
   const doc = read("README.md");
   for (const phrase of ["検知率・成功率を判定しません", "教材上の仮定", "番号の一致は未開封の証明になりません", "ファイルを直接開く`file://`には対応していません", "Safari、スマートフォン実機"]) assert.ok(doc.includes(phrase), phrase);
 });
+
+test("dynamic Japanese messages are separated from UI logic", () => {
+  const withoutComments = read("script.js").replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
+  assert.doesNotMatch(withoutComments, /[ぁ-ゖァ-ヺ一-龯]/);
+});
+test("all root screenshots are referenced by README", () => {
+  for (const file of fs.readdirSync(path.join(__dirname, "../assets"))) {
+    if (file.endsWith(".png")) assert.ok(read("README.md").includes("assets/" + file), file);
+  }
+});
