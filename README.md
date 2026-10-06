@@ -32,6 +32,8 @@ hub: true
 ---
 -->
 
+[English](README.en.md) · 日本語
+
 # Seal Tamper Lab - 封印シールのセキュリティ教育ツール
 
 ![GitHub Repo stars](https://img.shields.io/github/stars/ipusiron/seal-tamper-lab?style=social)
@@ -49,6 +51,8 @@ hub: true
 **物理セキュリティ** は、サイバーセキュリティと同様に重要な領域でありながら、しばしば軽視されがちです。産業スパイ、外国情報機関、内部脅威による **物理的な侵入・改竄** は、デジタル攻撃と組み合わせることで深刻な被害をもたらす可能性があります。本ツールは、そうした **物理的脅威に対する防御意識** を高めることにも寄与します。
 
 ---
+
+画面とスクリーンショットは現在日本語です。英語の説明はREADME.en.mdに用意しています。
 
 ## 🌐 デモページ
 
@@ -199,7 +203,7 @@ UVによる蛍光、近赤外照明による反射差、熱画像は区別しま
 
 ## 🚀 改良案・TODO
 
-- 日英の画面と全文README（現在の画面・本文は日本語のみ）
+- 日英の画面（現在の画面は日本語のみ。READMEは日英対応）
 - 権利と撮影条件を確認した実写の観察教材
 - 前提条件を問うクイズと条件比較
 
@@ -220,7 +224,8 @@ seal-tamper-lab/
 │   └── db.json            # 教材データ
 ├── test/
 │   ├── core.test.js       # 前提条件・既存例・URLの検証
-│   └── content.test.js    # 文言・資料・安全な描画の検証
+│   ├── content.test.js    # 文言・資料・安全な描画の検証
+│   └── readme-en.test.js  # 日英READMEの整合性
 ├── .nojekyll              # GitHub PagesのJekyll処理を無効化
 ├── index.html             # 画面とCSP
 ├── script.js              # 選択状態・段階移動・DOM描画
@@ -230,6 +235,7 @@ seal-tamper-lab/
 ├── package.json           # 依存パッケージなしのテスト設定
 ├── CLAUDE.md              # 開発方針
 ├── README.md              # この文書
+├── README.en.md           # 英語の説明
 └── LICENSE                # MITライセンス
 ```
 
