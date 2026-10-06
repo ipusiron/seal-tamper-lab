@@ -2,7 +2,7 @@
 :root{
   --bg: #ffffff;
   --text: #111827;        /* #111 */
-  --muted: #6b7280;       /* #666～#777 */
+  --muted: #4b5563;
   --line: #e5e7eb;        /* 枠線 */
   --line-soft: #f3f4f6;   /* スケルトン等 */
   --link: #2563eb;
@@ -56,6 +56,7 @@ body {
 
 /* ===== ステッパー ===== */
 .stepper {
+  justify-content: center;
   list-style: none;
   display: flex;
   gap: 8px;
@@ -91,22 +92,22 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
+  flex-direction: column;
+  gap: 8px;
   cursor: pointer;
 }
 .acc-title { font-weight: 700; color: var(--text); }
 .acc-summary { 
-  color: #059669; 
+  color: #047857;
   font-size: 14px; 
   font-weight: 500;
-  margin-left: 12px; 
+  margin-left: 0;
   background: #f0fdf4;
   padding: 4px 8px;
   border-radius: 6px;
   border: 1px solid #bbf7d0;
-  max-width: 60%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .acc-summary:empty {
@@ -145,6 +146,7 @@ select {
 /* ===== ボタン・ナビ ===== */
 .nav-row { display: flex; gap: 8px; margin-top: 12px; }
 .btn {
+  min-height: 44px;
   border: 1px solid var(--btn-line);
   background: #fff;
   border-radius: 8px;
@@ -165,13 +167,16 @@ select {
   border: 1px solid var(--line);
   border-radius: 9999px;
   padding: 4px 8px;
-  font-size: 12px;
+  font-size: 14px;
   background: #fff;
   display: inline-flex;
   align-items: center;
   gap: 6px;
 }
 .chip .x {
+  min-width: 44px;
+  min-height: 44px;
+  flex-shrink: 0;
   border: 0;
   background: transparent;
   cursor: pointer;
@@ -211,7 +216,7 @@ select {
 .attack-card-grid,
 .inspection-card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: 12px;
   margin: 12px 0;
 }
@@ -220,6 +225,9 @@ select {
 .seal-card,
 .attack-card,
 .inspection-card {
+  min-width: 0;
+  color: var(--text);
+  overflow-wrap: anywhere;
   border: 2px solid var(--line);
   border-radius: var(--radius);
   padding: 12px;
@@ -629,7 +637,7 @@ select {
 .seal-card-desc,
 .attack-card-desc,
 .inspection-card-desc {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--muted);
   line-height: 1.4;
   margin-bottom: 8px;
@@ -638,7 +646,7 @@ select {
 /* 攻撃特徴表示エリア */
 .attack-characteristics {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
   margin-top: 8px;
   padding-top: 8px;
@@ -651,12 +659,12 @@ select {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 10px;
+  font-size: 14px;
   position: relative;
   /* 確実な位置基準設定 */
   width: 100%;
   /* 最小幅を設定してレイアウトを安定化 */
-  min-width: 30px;
+  min-width: 0;
 }
 
 .characteristic-icon {
@@ -667,7 +675,7 @@ select {
 .characteristic-value {
   font-weight: 600;
   color: var(--text);
-  font-size: 12px;
+  font-size: 16px;
 }
 
 /* 攻撃セクション全体の特徴説明ヘッダー */
@@ -710,10 +718,23 @@ select {
 }
 
 /* ===== レスポンシブ ===== */
-@media (max-width: 640px){
-  .field { grid-template-columns: 1fr; }
+@media (min-width: 600px){
   .scene-card-grid,
   .seal-card-grid,
   .attack-card-grid,
-  .inspection-card-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+  .inspection-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.notice { padding: 12px; background: #fffbeb; border: 1px solid #d97706; border-radius: 8px; color: #78350f; }
+.inspection-guide { border-top: 1px solid var(--line); padding-top: 8px; margin-top: 16px; }
+.result-body h2 { font-size: 22px; margin-top: 0; }
+.result-body h3 { font-size: 18px; }
+.result-body h4 { font-size: 16px; }
+.result-body, .inline-card, .chip, .footer { overflow-wrap: anywhere; }
+.chip { max-width: 100%; }
+.inline-card figure { margin: 0 0 8px; }
+.inline-card img { max-width: 100%; height: auto; border: 1px solid var(--line); border-radius: 8px; }
+.inline-card figcaption { color: var(--muted); font-size: 14px; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }

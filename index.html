@@ -5,10 +5,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Seal Tamper Lab</title>
   <meta name="description" content="封印シールの脆弱性と検知技術を学ぶ教育ツール" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.nip-image.com; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'none';">
-  <meta http-equiv="X-Content-Type-Options" content="nosniff">
-  <meta http-equiv="X-Frame-Options" content="DENY">
-  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none';">
+  <meta name="referrer" content="no-referrer">
+  <link rel="icon" href="data:,">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -18,6 +17,7 @@
   </header>
 
   <main id="app" class="container">
+    <p class="notice">封印の観察候補と検査の限界を学ぶ教材です。実物の改ざん判定や検知率の計算は行いません。実物の検査は所有者の許可と安全な手順のもとで行ってください。</p>
     <p id="app-status" role="status" aria-live="polite">教材データを読み込んでいます。</p>
     <div class="utility-actions">
       <button class="btn" id="retry-load" type="button" hidden>読み込みを再試行</button>
@@ -83,7 +83,7 @@
       </button>
       <div id="panel-3" class="acc-panel" hidden>
         <div class="card">
-          <p class="hint">完全除去・同一シール再貼付・部分カットなどを選択（複数可）。<br>コスト・時間・技術・痕跡レベル（1=低、5=高）</p>
+          <p class="hint">想定する改変を選びます（複数可）。数値はコスト・時間・技術・痕跡の目立ちやすさを考えるための教材上の仮定（1＝低、5＝高）であり、実測値や発覚確率ではありません。</p>
           <div id="attack-cards" class="attack-card-grid" role="group" aria-label="攻撃手法を選択（複数可）">
             <!-- カード型UIがJavaScriptで動的に生成される -->
           </div>
@@ -122,7 +122,7 @@
     <!-- ステップ5：結果・解説 -->
     <section class="accordion" id="step-5" data-step="5">
       <button class="acc-header" aria-expanded="false" aria-controls="panel-5">
-        <span class="acc-title">ステップ5：結果・解説</span>
+        <span class="acc-title">ステップ5：確認ポイントと限界</span>
         <span class="acc-summary" id="summary-result"></span>
       </button>
       <div id="panel-5" class="acc-panel" hidden>

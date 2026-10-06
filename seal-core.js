@@ -27,6 +27,7 @@
         if (item.characteristics && ["cost", "time", "skill", "traces"].some(key =>
           !Number.isInteger(item.characteristics[key]) || item.characteristics[key] < 1 || item.characteristics[key] > 5)) return false;
         if (own(item, "meta") && (!item.meta || typeof item.meta !== "object" || Array.isArray(item.meta))) return false;
+        if (item.meta && own(item.meta, "hasSerial") && typeof item.meta.hasSerial !== "boolean") return false;
       }
     }
     for (const scenario of db.scenarios) {

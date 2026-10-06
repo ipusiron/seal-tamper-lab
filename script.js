@@ -163,7 +163,7 @@ function renderSceneCards(scenes){
   const container = els.sceneCards();
   if (!container) return;
   
-  container.innerHTML = "";
+  container.replaceChildren();
   
   scenes.forEach(scene => {
     const card = document.createElement("button");
@@ -173,20 +173,8 @@ function renderSceneCards(scenes){
     card.setAttribute("aria-checked", "false");
     card.dataset.sceneId = scene.id;
     
-    // 視覚表現の決定
-    let visualClass = "";
-    let shortDesc = scene.description || "";
-    
-    if (scene.name?.includes("封筒") || scene.id?.includes("envelope")) {
-      visualClass = "envelope";
-      shortDesc = shortDesc || "紙の表面で繊維の乱れが観察しやすい";
-    } else if (scene.name?.includes("段ボール") || scene.id?.includes("cardboard")) {
-      visualClass = "cardboard"; 
-      shortDesc = shortDesc || "波形構造で除去後の下地荒れが出やすい";
-    } else if (scene.name?.includes("機器") || scene.id?.includes("device")) {
-      visualClass = "device";
-      shortDesc = shortDesc || "平滑面で再貼付が目立ちにくい";
-    }
+    const visualClass = { "scene-envelope": "envelope", "scene-cardboard": "cardboard", "scene-device": "device" }[scene.id] || "";
+    const shortDesc = scene.description || "";
     
     // DOM要素を安全に作成
     const visual = document.createElement('div');
@@ -230,17 +218,7 @@ function renderAttackCards(attacks){
   const container = els.attackCards();
   if (!container) return;
   
-  container.innerHTML = "";
-  
-  // 既存のヘッダーを削除（重複防止）
-  const existingHeader = container.parentNode.querySelector('.attack-characteristics-header');
-  if (existingHeader) {
-    existingHeader.remove();
-  }
-  
-  // 特徴説明ヘッダーをグリッドの前に追加
-  const headerDiv = document.createElement('div');
-  headerDiv.className = 'attack-characteristics-header';
+  container.replaceChildren();
   
   attacks.forEach(attack => {
     const card = document.createElement("button");
@@ -250,29 +228,8 @@ function renderAttackCards(attacks){
     card.setAttribute("aria-checked", "false");
     card.dataset.attackId = attack.id;
     
-    // 視覚表現の決定
-    let visualClass = "";
-    let shortDesc = attack.description || "";
-    
-    if (attack.name?.includes("完全除去") || attack.id?.includes("full-remove")) {
-      visualClass = "full-remove";
-      shortDesc = shortDesc || "痕跡ごと削ぎ取る";
-    } else if (attack.name?.includes("再貼付") || attack.id?.includes("reapply")) {
-      visualClass = "reapply";
-      shortDesc = shortDesc || "同一シールで貼り直し";
-    } else if (attack.name?.includes("温風") || attack.id?.includes("heat")) {
-      visualClass = "heat";
-      shortDesc = shortDesc || "熱で粘着を弱める";
-    } else if (attack.name?.includes("カット") || attack.id?.includes("cut")) {
-      visualClass = "cut";
-      shortDesc = shortDesc || "部分的に切って侵入";
-    } else if (attack.name?.includes("溶剤") || attack.id?.includes("solvent")) {
-      visualClass = "solvent";
-      shortDesc = shortDesc || "薬品で糊を緩める";
-    } else if (attack.name?.includes("偽装") || attack.id?.includes("disguise")) {
-      visualClass = "disguise";
-      shortDesc = shortDesc || "表面を整え新規貼付";
-    }
+    const visualClass = { "atk-full-remove": "full-remove", "atk-same-reapply": "reapply", "atk-heat-peel": "heat", "atk-partial-cut": "cut", "atk-solvent-soften": "solvent", "atk-surface-disguise": "disguise" }[attack.id] || "";
+    const shortDesc = attack.description || "";
     
     // DOM要素を安全に作成
     const visual = document.createElement('div');
@@ -293,18 +250,6 @@ function renderAttackCards(attacks){
     // 特徴表示エリアの追加
     if (attack.characteristics) {
       const characteristicsWrapper = document.createElement('div');
-      
-      // ラベル行追加
-      const labelsDiv = document.createElement('div');
-      labelsDiv.className = 'characteristics-labels';
-      
-      const labels = ['コスト', '時間', '技術', 'リスク'];
-      labels.forEach(label => {
-        const labelDiv = document.createElement('div');
-        labelDiv.className = 'characteristic-label';
-        labelDiv.textContent = label;
-        labelsDiv.appendChild(labelDiv);
-      });
       
       // 特徴値の表示
       const characteristicsDiv = document.createElement('div');
@@ -331,12 +276,12 @@ function renderAttackCards(attacks){
         valueDiv.className = 'characteristic-value';
         valueDiv.textContent = value;
         
+        charDiv.appendChild(node("span", t(char.key), "characteristic-label"));
         charDiv.appendChild(iconDiv);
         charDiv.appendChild(valueDiv);
         characteristicsDiv.appendChild(charDiv);
       });
       
-      characteristicsWrapper.appendChild(labelsDiv);
       characteristicsWrapper.appendChild(characteristicsDiv);
       card.appendChild(characteristicsWrapper);
     }
@@ -370,7 +315,7 @@ function renderSealCards(seals){
   const container = els.sealCards();
   if (!container) return;
   
-  container.innerHTML = "";
+  container.replaceChildren();
   
   seals.forEach(seal => {
     const card = document.createElement("button");
@@ -380,26 +325,8 @@ function renderSealCards(seals){
     card.setAttribute("aria-checked", "false");
     card.dataset.sealId = seal.id;
     
-    // 視覚表現の決定
-    let visualClass = "";
-    let shortDesc = seal.summary || "";
-    
-    if (seal.type === "VOID") {
-      visualClass = "void";
-      shortDesc = shortDesc || "剥がすとVOID文字が残る";
-    } else if (seal.type === "HOLOGRAM" || seal.name?.includes("ホログラム")) {
-      visualClass = "hologram";
-      shortDesc = shortDesc || "光の角度で色が変化";
-    } else if (seal.type === "PAPER" || seal.name?.includes("紙封緘")) {
-      visualClass = "paper";
-      shortDesc = shortDesc || "和紙に朱印を押したタイプ";
-    } else if (seal.type === "SERIAL_TAPE" || seal.name?.includes("連番")) {
-      visualClass = "serial";
-      shortDesc = shortDesc || "連番で追跡可能";
-    } else if (seal.type === "CLEAR" || seal.name?.includes("透明")) {
-      visualClass = "transparent";
-      shortDesc = shortDesc || "透明で目立たない";
-    }
+    const visualClass = { VOID: "void", HOLOGRAM: "hologram", PAPER: "paper", SERIAL_TAPE: "serial", CLEAR: "transparent" }[seal.type] || "";
+    const shortDesc = seal.summary || "";
     
     // DOM要素を安全に作成
     const visual = document.createElement('div');
@@ -444,7 +371,7 @@ function renderInspectionCards(inspections){
   const container = els.inspectionCards();
   if (!container) return;
   
-  container.innerHTML = "";
+  container.replaceChildren();
   
   inspections.forEach(inspection => {
     const card = document.createElement("button");
@@ -454,29 +381,8 @@ function renderInspectionCards(inspections){
     card.setAttribute("aria-checked", "false");
     card.dataset.inspectionId = inspection.id;
     
-    // 視覚表現の決定
-    let visualClass = "";
-    let shortDesc = inspection.description || "";
-    
-    if (inspection.name?.includes("斜光") || inspection.id?.includes("oblique")) {
-      visualClass = "oblique";
-      shortDesc = shortDesc || "角度を変えて光を当てる";
-    } else if (inspection.name?.includes("基準写真") || inspection.id?.includes("baseline")) {
-      visualClass = "reference";
-      shortDesc = shortDesc || "元の写真と比較検証";
-    } else if (inspection.name?.includes("連番") || inspection.id?.includes("serial")) {
-      visualClass = "serial-check";
-      shortDesc = shortDesc || "番号の整合性を確認";
-    } else if (inspection.name?.includes("マクロ") || inspection.id?.includes("macro")) {
-      visualClass = "microscope";
-      shortDesc = shortDesc || "拡大でエッジや繊維確認";
-    } else if (inspection.name?.includes("透過光") || inspection.id?.includes("transmitted")) {
-      visualClass = "transmitted";
-      shortDesc = shortDesc || "透過光で密度ムラ確認";
-    } else if (inspection.name?.includes("UV") || inspection.name?.includes("IR") || inspection.id?.includes("uv")) {
-      visualClass = "fluorescent";
-      shortDesc = shortDesc || "特殊光で隠し要素確認";
-    }
+    const visualClass = { "insp-oblique": "oblique", "insp-baseline-compare": "reference", "insp-serial-check": "serial-check", "insp-macro": "microscope", "insp-transmitted": "transmitted", "insp-uv": "fluorescent" }[inspection.id] || "";
+    const shortDesc = inspection.howto || "";
     
     // DOM要素を安全に作成
     const visual = document.createElement('div');
@@ -612,8 +518,8 @@ function updateSummaries(){
   const seal = findById(state.db?.seals, state.sealId);
   const sealEl = els.sumSeal();
   if (seal){
-    const strong = (seal.strengths?.[0]) ? `強: ${seal.strengths[0]}` : "";
-    const weak = (seal.weaknesses?.[0]) ? `弱: ${seal.weaknesses[0]}` : "";
+    const strong = (seal.strengths?.[0]) ? `${t("strong")}${seal.strengths[0]}` : "";
+    const weak = (seal.weaknesses?.[0]) ? `${t("weak")}${seal.weaknesses[0]}` : "";
     sealEl.textContent = [seal.name, strong, weak].filter(Boolean).join(" / ");
     sealEl.classList.remove("empty");
   } else {
@@ -637,8 +543,8 @@ function updateSummaries(){
   els.sumResult().textContent = [
     scene?.name,
     seal?.name,
-    attacks[0] ? `攻:${attacks[0]}…` : "",
-    inspections[0] ? `検:${inspections[0]}…` : ""
+    attacks[0] ? `${t("attackPrefix")}${attacks[0]}…` : "",
+    inspections[0] ? `${t("inspectionPrefix")}${inspections[0]}…` : ""
   ].filter(Boolean).join(" / ");
 
   // ナビゲーションボタンの状態更新
@@ -687,13 +593,13 @@ function updateNavButtons(){
 function chipsSummary(list){
   if (!list.length) return "";
   if (list.length <= 3) return list.join("・");
-  return `${list.slice(0,3).join("・")} 他 ${list.length - 3} 件`;
+  return `${list.slice(0,3).join("・")} ${t("otherCount")} ${list.length - 3} ${t("count")}`;
 }
 
 /* ===== ピル描画 ===== */
 function renderAttackChips(){
   const root = els.chipsAttack();
-  root.innerHTML = "";
+  root.replaceChildren();
   (state.attacks ?? []).forEach(id => {
     const item = findById(state.db?.attacks, id);
     if (!item) return;
@@ -701,13 +607,14 @@ function renderAttackChips(){
       state.attacks = state.attacks.filter(x => x !== id);
       renderAttackChips();
       updateSummaries();
+      document.querySelector(`[data-attack-id="${id}"]`)?.focus();
     }));
   });
 }
 
 function renderInspectionChips(){
   const root = els.chipsInspection();
-  root.innerHTML = "";
+  root.replaceChildren();
   (state.inspections ?? []).forEach(id => {
     const item = findById(state.db?.inspections, id);
     if (!item) return;
@@ -715,6 +622,7 @@ function renderInspectionChips(){
       state.inspections = state.inspections.filter(x => x !== id);
       renderInspectionChips();
       updateSummaries();
+      document.querySelector(`[data-inspection-id="${id}"]`)?.focus();
     }));
   });
 }
@@ -722,10 +630,11 @@ function renderInspectionChips(){
 function childChip(text, onRemove){
   const span = document.createElement("span");
   span.className = "chip";
-  span.innerHTML = `<span>${text}</span>`;
+  span.appendChild(node("span", text));
   const x = document.createElement("button");
   x.className = "x";
-  x.setAttribute("aria-label", `${text} を削除`);
+  x.type = "button";
+  x.setAttribute("aria-label", `${text}${t("remove")}`);
   x.textContent = "×";
   x.addEventListener("click", onRemove);
   span.appendChild(x);
@@ -733,89 +642,83 @@ function childChip(text, onRemove){
 }
 
 /* ===== シールの強み・弱み等 ===== */
-function renderSealExtras(){
-  const c = els.sealExtras();
-  c.innerHTML = "";
-  const seal = findById(state.db?.seals, state.sealId);
-  if (!seal) return;
-
-  const block = document.createElement("div");
-  const strengths = (seal.strengths ?? []).map(s => `<li>${escapeHtml(s)}</li>`).join("");
-  const weaknesses = (seal.weaknesses ?? []).map(s => `<li>${escapeHtml(s)}</li>`).join("");
-  block.className = "extras";
-  block.innerHTML = `
-    ${strengths ? `<div><strong>強み</strong><ul>${strengths}</ul></div>` : ""}
-    ${weaknesses ? `<div style="margin-top:6px;"><strong>弱み</strong><ul>${weaknesses}</ul></div>` : ""}
-    ${seal.common_uses ? `<div class="meta" style="margin-top:6px;">用途：${escapeHtml(seal.common_uses)}</div>` : ""}
-  `;
-  c.appendChild(block);
+function node(tag, text, className) {
+  const element = document.createElement(tag);
+  if (text !== undefined) element.textContent = text;
+  if (className) element.className = className;
+  return element;
 }
 
-/* ===== 結果の描画・アクション（refs/images ボタンは存在時のみ） ===== */
+function textList(items) {
+  const list = node("ul");
+  items.forEach(text => list.appendChild(node("li", text)));
+  return list;
+}
+
+function renderSealExtras(){
+  const c = els.sealExtras();
+  c.replaceChildren();
+  const seal = findById(state.db?.seals, state.sealId);
+  if (!seal) return;
+  for (const [key, label] of [["strengths", "strong"], ["weaknesses", "weak"]]) {
+    if (seal[key]?.length) c.append(node("h3", t(label)), textList(seal[key]));
+  }
+  if (seal.common_uses) c.appendChild(node("p", t("use") + seal.common_uses, "meta"));
+  c.appendChild(node("p", t("modelSeal"), "hint"));
+}
+
+/* ===== 根拠と限界の解説 ===== */
 function renderResult(){
-  if (!SealCore.buildGuide(state.db, state).complete) {
+  const guide = SealCore.buildGuide(state.db, state);
+  if (!guide.complete) {
     invalidateResult();
     document.getElementById("app-status").textContent = t("incomplete");
     return;
   }
   resultGenerated = true;
-  // クリア
-  els.resultBody().innerHTML = "";
-  els.resultActions().innerHTML = "";
-  els.inlineRefs().innerHTML = "";
-  els.inlineImages().innerHTML = "";
+  const root = els.resultBody();
+  root.replaceChildren();
+  els.resultActions().replaceChildren();
+  els.inlineRefs().replaceChildren();
+  els.inlineImages().replaceChildren();
 
-  const scene = findById(state.db?.scenes, state.sceneId);
-  const seal = findById(state.db?.seals, state.sealId);
-  const attacks = (state.attacks ?? []).map(id => findById(state.db?.attacks, id)).filter(Boolean);
-  const inspections = (state.inspections ?? []).map(id => findById(state.db?.inspections, id)).filter(Boolean);
+  root.append(node("h2", t("guideTitle")), node("p", t("modelNotice"), "notice"));
+  root.append(node("h3", t("selectedConditions")), textList([
+    t("scenePrefix") + guide.scene.name,
+    t("sealPrefix") + guide.seal.name,
+    t("attackPrefix") + guide.attacks.map(item => item.name).join(" / "),
+    t("inspectionPrefix") + guide.inspections.map(({item}) => item.name).join(" / ")
+  ]));
+  root.append(node("h3", t("traceCandidates")), node("p", t("traceNotice")));
+  root.appendChild(textList(guide.attacks.map(item => item.name + "：" + item.expected_effect)));
 
-  // 本文カード（文章だけで成立）
-  const lines = [];
-  if (scene) lines.push(`<p><strong>シーン：</strong>${escapeHtml(scene.name)}</p>`);
-  if (seal) lines.push(`<p><strong>シール：</strong>${escapeHtml(seal.name)}</p>`);
-  if (attacks.length) lines.push(`<p><strong>攻撃：</strong>${attacks.map(a => escapeHtml(a.name)).join(" / ")}</p>`);
-  if (inspections.length) lines.push(`<p><strong>検査：</strong>${inspections.map(i => escapeHtml(i.name)).join(" / ")}</p>`);
+  root.appendChild(node("h3", t("inspectionLimits")));
+  for (const { item, condition } of guide.inspections) {
+    const section = node("section", undefined, "inspection-guide");
+    section.append(node("h4", item.name), node("p", item.howto));
+    section.append(node("p", t("observePrefix") + (item.detects || []).map(key => t(key) || key).join("・")));
+    section.append(node("p", t(condition), "notice"));
+    root.appendChild(section);
+  }
+  root.append(node("h3", t("caseTitle")), node("p", t("caseNotice")));
+  if (!guide.scenarios.length) root.appendChild(node("p", t("noCase")));
+  for (const { item, additionalInspections } of guide.scenarios) {
+    root.append(node("h4", item.title), node("p", item.lesson));
+    if (additionalInspections.length) root.appendChild(node("p", t("additionalPrefix") +
+      additionalInspections.map(id => findById(state.db.inspections, id).name).join("・")));
+  }
+  root.appendChild(node("p", t("finalLimit"), "notice"));
 
-  // 教育的な要点（簡易）
-  if (seal){
-    if (seal.weaknesses?.length){
-      lines.push(`<p><strong>注意：</strong>${escapeHtml(seal.weaknesses[0])}</p>`);
-    }
-  }
-  if (!lines.length){
-    lines.push(`<p class="hint">上のステップで選択すると、ここに解説が表示されます。</p>`);
-  }
-  els.resultBody().innerHTML = lines.join("");
-
-  // refs / images のあるなしでボタン出し分け（存在時のみ）
-  // ここでは「シール」の refs/images を優先してボタン化（拡張可）
-  const actions = [];
-  if (seal?.refs?.length){
-    const btn = button("資料を開く ("+ seal.refs.length +")", () => showRefs("シールの参考資料", seal.refs));
-    actions.push(btn);
-  }
-  if (seal?.images?.length){
-    const btn2 = button("画像を見る ("+ seal.images.length +")", () => showImages("シールの画像", seal.images));
-    actions.push(btn2);
-  }
-  // 攻撃・検査にも refs/images があれば追補
-  const aggRefs = [...(attacks.flatMap(a => a.refs || [])), ...(inspections.flatMap(i => i.refs || []))];
-  const aggImgs = [...(attacks.flatMap(a => a.images || [])), ...(inspections.flatMap(i => i.images || []))];
-
-  if (aggRefs.length){
-    const b = button("関連資料を開く ("+ aggRefs.length +")", () => showRefs("関連資料", aggRefs));
-    actions.push(b);
-  }
-  if (aggImgs.length){
-    const b2 = button("関連画像を見る ("+ aggImgs.length +")", () => showImages("関連画像", aggImgs));
-    actions.push(b2);
-  }
-
-  // ボタンが1つ以上ある場合のみ表示
-  if (actions.length){
-    actions.forEach(a => els.resultActions().appendChild(a));
-  }
+  const sources = [guide.scene, guide.seal, ...guide.attacks,
+    ...guide.inspections.map(x => x.item), ...guide.scenarios.map(x => x.item)];
+  const refs = [...new Map(sources.flatMap(x => x.refs || [])
+    .filter(x => SealCore.safeReference(x.url)).map(x => [SealCore.safeReference(x.url), x])).values()];
+  const images = [...new Map(sources.flatMap(x => x.images || [])
+    .filter(x => SealCore.safeImage(x.src)).map(x => [x.src, x])).values()];
+  if (refs.length) els.resultActions().appendChild(button(t("referenceButton") + " (" + refs.length + ")",
+    () => showRefs(t("referenceTitle"), refs)));
+  if (images.length) els.resultActions().appendChild(button(t("imageButton") + " (" + images.length + ")",
+    () => showImages(t("imageTitle"), images)));
 }
 
 function button(text, onClick){
@@ -828,57 +731,45 @@ function button(text, onClick){
 }
 
 function showRefs(title, refs){
-  els.inlineRefs().innerHTML = "";
-  const box = document.createElement("div");
-  box.className = "inline-card";
-  box.innerHTML = `<h4>${escapeHtml(title)}</h4>`;
-  const ul = document.createElement("ul");
-  ul.className = "inline-list";
-  refs.forEach(r => {
-    const li = document.createElement("li");
-    const t = r.title || r.url;
-    const type = r.type || "link";
-    li.innerHTML = `・<a href="${r.url}" target="_blank" rel="noopener noreferrer">${escapeHtml(t)}</a> <span style="opacity:.6">[${escapeHtml(type)}]</span>`;
-    ul.appendChild(li);
+  const box = node("div", undefined, "inline-card");
+  box.append(node("h3", title), node("p", t("referenceNotice")));
+  const list = node("ul", undefined, "inline-list");
+  refs.forEach(ref => {
+    const url = SealCore.safeReference(ref.url);
+    if (!url) return;
+    const link = node("a", ref.title || url);
+    link.href = url;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    const item = node("li");
+    item.appendChild(link);
+    list.appendChild(item);
   });
-  box.appendChild(ul);
-  els.inlineRefs().appendChild(box);
-  // スクロール
-  box.scrollIntoView({behavior:"smooth", block:"nearest"});
+  box.appendChild(list);
+  els.inlineRefs().replaceChildren(box);
+  box.scrollIntoView({behavior: "auto", block: "nearest"});
 }
 
 function showImages(title, images){
-  els.inlineImages().innerHTML = "";
-  const box = document.createElement("div");
-  box.className = "inline-card";
-  box.innerHTML = `<h4>${escapeHtml(title)}</h4>`;
+  const box = node("div", undefined, "inline-card");
+  box.appendChild(node("h3", title));
   images.forEach(im => {
-    const fig = document.createElement("figure");
-    fig.style.margin = "0 0 8px 0";
-    const img = document.createElement('img');
-    img.src = im.src;
+    const src = SealCore.safeImage(im.src);
+    if (!src) return;
+    const figure = node("figure");
+    const img = node("img");
+    img.src = src;
     img.alt = im.alt || "";
-    img.style.cssText = "max-width:100%;height:auto;border:1px solid #eee;border-radius:8px;";
-    
-    const caption = document.createElement('figcaption');
-    caption.style.cssText = "opacity:.7;font-size:13px;";
-    caption.textContent = im.alt || "";
-    
-    fig.appendChild(img);
-    fig.appendChild(caption);
-    box.appendChild(fig);
+    img.addEventListener("error", () => img.replaceWith(node("p", t("imageError"))), { once: true });
+    figure.append(img, node("figcaption", im.alt || ""));
+    box.appendChild(figure);
   });
-  els.inlineImages().appendChild(box);
-  box.scrollIntoView({behavior:"smooth", block:"nearest"});
+  els.inlineImages().replaceChildren(box);
+  box.scrollIntoView({behavior: "auto", block: "nearest"});
 }
 
-
-/* ===== 小物 ===== */
 function findById(list, id){
   return (list || []).find(x => x.id === id);
-}
-function escapeHtml(s){
-  return String(s ?? "").replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 }
 
 /* 起動 */
