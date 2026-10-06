@@ -3,6 +3,8 @@
   const messages = Object.freeze({
     loading: "教材データを読み込んでいます。",
     ready: "シーンから順番に選んでください。",
+    selectionUpdated: "選択内容を更新しました。条件を確認して次の段階へ進んでください。",
+    resultReady: "選んだ条件の確認ポイントと限界を表示しています。",
     loadError: "教材データを読み込めませんでした。接続を確認して再試行してください。",
     fileUnsupported: "ファイルを直接開く方式には対応していません。フォルダーで python -m http.server 8000 を実行し、http://localhost:8000/ を開いてください。",
     invalidated: "条件が変わったため結果を消しました。選択を確認し、結果を開いてください。",

@@ -456,6 +456,7 @@ function setAccordion(section, open){
   // 対象を開く
   header.setAttribute("aria-expanded", open ? "true" : "false");
   panel.hidden = !open;
+  if (open) header.focus({ preventScroll: true });
 
   // ステッパーの状態更新
   highlightStepper(section.dataset.step);
@@ -507,6 +508,7 @@ function attachNav(){
 /* ===== サマリー更新 ===== */
 function updateSummaries(){
   syncChoices();
+  document.getElementById("app-status").textContent = t(state.sceneId || state.sealId || state.attacks.length || state.inspections.length ? "selectionUpdated" : "ready");
   invalidateResult();
   // シーン
   const scene = findById(state.db?.scenes, state.sceneId);
@@ -676,6 +678,7 @@ function renderResult(){
     return;
   }
   resultGenerated = true;
+  document.getElementById("app-status").textContent = t("resultReady");
   const root = els.resultBody();
   root.replaceChildren();
   els.resultActions().replaceChildren();

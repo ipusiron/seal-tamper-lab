@@ -56,3 +56,24 @@ test("reduced motion and touch targets are provided", () => {
   assert.match(read("style.css"), /prefers-reduced-motion: reduce/);
   assert.match(read("style.css"), /\.chip \.x\s*\{\s*min-width: 44px;\s*min-height: 44px;/);
 });
+
+test("README illustrative table matches every database rating", () => {
+  const names = ["完全除去", "同一シール再貼付", "温風で剥がし再接着", "部分カット", "溶剤で糊を緩める", "下地偽装"];
+  const rows = read("README.md").split("\n");
+  db.attacks.forEach((attack, index) => {
+    const row = rows.find(line => line.startsWith("| " + names[index] + " |"));
+    assert.ok(row, attack.id);
+    assert.deepEqual(row.split("|").slice(2, 6).map(x => Number(x.trim())),
+      ["cost", "time", "skill", "traces"].map(key => attack.characteristics[key]));
+  });
+});
+test("README local links and screenshot exist", () => {
+  for (const match of read("README.md").matchAll(/\]\(([^)]+)\)/g)) {
+    if (/^(?:https?:|#)/.test(match[1])) continue;
+    assert.ok(fs.existsSync(path.join(__dirname, "..", match[1])), match[1]);
+  }
+});
+test("README states actual limits and unsupported file protocol", () => {
+  const doc = read("README.md");
+  for (const phrase of ["検知率・成功率を判定しません", "教材上の仮定", "番号の一致は未開封の証明になりません", "ファイルを直接開く`file://`には対応していません", "Safari、スマートフォン実機"]) assert.ok(doc.includes(phrase), phrase);
+});
