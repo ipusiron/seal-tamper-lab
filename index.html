@@ -18,6 +18,12 @@
   </header>
 
   <main id="app" class="container">
+    <p id="app-status" role="status" aria-live="polite">教材データを読み込んでいます。</p>
+    <div class="utility-actions">
+      <button class="btn" id="retry-load" type="button" hidden>読み込みを再試行</button>
+      <button class="btn" id="reset-all" type="button" disabled>選択と結果を消す</button>
+    </div>
+    <noscript>この教材の操作にはJavaScriptが必要です。</noscript>
     <!-- ステップインジケータ -->
     <ol class="stepper" aria-label="進行ステップ">
       <li class="active" data-step="1">シーン</li>
@@ -160,6 +166,8 @@
     </div>
   </footer>
 
+  <script src="seal-core.js"></script>
+  <script src="seal-messages.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

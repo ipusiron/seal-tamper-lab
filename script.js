@@ -8,6 +8,8 @@ const state = {
   attacks: [],
   inspections: [],
 };
+const t = key => SealMessages[key];
+let resultGenerated = false;
 
 const els = {
   stepper: () => document.querySelectorAll(".stepper li"),
@@ -19,9 +21,6 @@ const els = {
   sealCards: () => document.getElementById("seal-cards"),
   attackCards: () => document.getElementById("attack-cards"),
   inspectionCards: () => document.getElementById("inspection-cards"),
-  selSeal: () => document.getElementById("select-seal"),
-  selAttack: () => document.getElementById("select-attack"),
-  selInspection: () => document.getElementById("select-inspection"),
 
   chipsAttack: () => document.getElementById("attack-chips"),
   chipsInspection: () => document.getElementById("inspection-chips"),
@@ -42,9 +41,32 @@ const els = {
 async function boot(){
   attachAccordion();
   attachNav();
+  document.getElementById("retry-load").addEventListener("click", loadDatabase);
+  document.getElementById("reset-all").addEventListener("click", () => {
+    Object.assign(state, { sceneId: "", sealId: "", attacks: [], inspections: [] });
+    renderAttackChips();
+    renderInspectionChips();
+    renderSealExtras();
+    updateSummaries();
+    setAccordion(document.getElementById("step-1"), true);
+    document.getElementById("app-status").textContent = t("reset");
+    document.querySelector(".scene-card")?.focus();
+  });
   
   // 初期状態でボタンを無効化
   updateNavButtons();
+  await loadDatabase();
+}
+
+async function loadDatabase() {
+  const status = document.getElementById("app-status");
+  const retry = document.getElementById("retry-load");
+  retry.hidden = true;
+  if (location.protocol === "file:") {
+    status.textContent = t("fileUnsupported");
+    return;
+  }
+  status.textContent = t("loading");
 
   // DB 読み込み
   try {
@@ -64,19 +86,24 @@ async function boot(){
       throw new TypeError("Received non-JSON response");
     }
     
-    state.db = await res.json();
+    const database = await res.json();
     
     // データ検証
-    if (!state.db || typeof state.db !== 'object') {
+    if (!SealCore.validateDatabase(database)) {
       throw new Error("Invalid database format");
     }
+    state.db = database;
     
     populateSelects();
     // DBが読めたらガイドを薄く
-    els.guide().style.display = "none";
+    els.guide().hidden = true;
+    document.getElementById("reset-all").disabled = false;
+    status.textContent = t("ready");
+    updateSummaries();
   } catch (e) {
-    console.error("DB読み込み失敗:", e);
-    // ガイドはそのまま表示（選択は不可だがUIは動作）
+    state.db = null;
+    status.textContent = t("loadError");
+    retry.hidden = false;
   }
 }
 
@@ -88,15 +115,47 @@ function populateSelects(){
   renderInspectionCards(state.db?.inspections ?? []);
 }
 
-function fillSelect(selectEl, list){
-  // 先頭の -- 未選択 -- は残す
-  // 残りを追加
-  list.forEach(item => {
-    const opt = document.createElement("option");
-    opt.value = item.id;
-    opt.textContent = item.title || item.name;
-    selectEl.appendChild(opt);
+function prepareChoice(card, container, multiple) {
+  card.type = "button";
+  if (multiple) return;
+  card.addEventListener("keydown", event => {
+    const keys = ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End"];
+    if (!keys.includes(event.key)) return;
+    event.preventDefault();
+    const cards = [...container.querySelectorAll('[role="radio"]')];
+    const index = cards.indexOf(card);
+    const delta = ["ArrowLeft", "ArrowUp"].includes(event.key) ? -1 : 1;
+    const next = event.key === "Home" ? 0 : event.key === "End" ? cards.length - 1 : (index + delta + cards.length) % cards.length;
+    cards[next].click();
+    cards[next].focus();
   });
+}
+
+function syncChoices() {
+  for (const [group, field, attribute, multiple] of [
+    ["scene", "sceneId", "sceneId", false], ["seal", "sealId", "sealId", false],
+    ["attack", "attacks", "attackId", true], ["inspection", "inspections", "inspectionId", true]
+  ]) {
+    const cards = [...document.querySelectorAll("." + group + "-card")];
+    cards.forEach((card, index) => {
+      const selected = multiple ? state[field].includes(card.dataset[attribute]) : state[field] === card.dataset[attribute];
+      card.classList.toggle("selected", selected);
+      card.setAttribute("aria-checked", String(selected));
+      card.tabIndex = multiple || selected || !state[field] && index === 0 ? 0 : -1;
+    });
+  }
+}
+
+function invalidateResult() {
+  const placeholder = document.createElement("p");
+  placeholder.className = "hint";
+  placeholder.textContent = t("placeholder");
+  els.resultBody().replaceChildren(placeholder);
+  els.resultActions().replaceChildren();
+  els.inlineRefs().replaceChildren();
+  els.inlineImages().replaceChildren();
+  if (resultGenerated) document.getElementById("app-status").textContent = t("invalidated");
+  resultGenerated = false;
 }
 
 // シーンカードUIの生成
@@ -107,7 +166,8 @@ function renderSceneCards(scenes){
   container.innerHTML = "";
   
   scenes.forEach(scene => {
-    const card = document.createElement("div");
+    const card = document.createElement("button");
+    prepareChoice(card, container, false);
     card.className = "scene-card";
     card.setAttribute("role", "radio");
     card.setAttribute("aria-checked", "false");
@@ -183,7 +243,8 @@ function renderAttackCards(attacks){
   headerDiv.className = 'attack-characteristics-header';
   
   attacks.forEach(attack => {
-    const card = document.createElement("div");
+    const card = document.createElement("button");
+    prepareChoice(card, container, true);
     card.className = "attack-card";
     card.setAttribute("role", "checkbox");
     card.setAttribute("aria-checked", "false");
@@ -312,7 +373,8 @@ function renderSealCards(seals){
   container.innerHTML = "";
   
   seals.forEach(seal => {
-    const card = document.createElement("div");
+    const card = document.createElement("button");
+    prepareChoice(card, container, false);
     card.className = "seal-card";
     card.setAttribute("role", "radio");
     card.setAttribute("aria-checked", "false");
@@ -385,7 +447,8 @@ function renderInspectionCards(inspections){
   container.innerHTML = "";
   
   inspections.forEach(inspection => {
-    const card = document.createElement("div");
+    const card = document.createElement("button");
+    prepareChoice(card, container, true);
     card.className = "inspection-card";
     card.setAttribute("role", "checkbox");
     card.setAttribute("aria-checked", "false");
@@ -469,6 +532,12 @@ function attachAccordion(){
 }
 
 function setAccordion(section, open){
+  const step = Number(section.dataset.step);
+  if (open && !SealCore.canEnter(state, step)) {
+    document.getElementById("app-status").textContent = t("incomplete");
+    return;
+  }
+  if (open && step === 5) renderResult();
   const header = section.querySelector(".acc-header");
   const panel = section.querySelector(".acc-panel");
 
@@ -486,7 +555,7 @@ function setAccordion(section, open){
   highlightStepper(section.dataset.step);
 
   // スクロール
-  section.scrollIntoView({behavior: "smooth", block: "start"});
+  section.scrollIntoView({behavior: "auto", block: "start"});
 }
 
 function highlightStepper(step){
@@ -523,8 +592,6 @@ function attachNav(){
   prev4.addEventListener("click", () => setAccordion(document.getElementById("step-3"), true));
   next4.addEventListener("click", () => {
     if (next4.disabled) return;
-    // 結果を描画
-    renderResult();
     setAccordion(document.getElementById("step-5"), true);
   });
   prev5.addEventListener("click", () => setAccordion(document.getElementById("step-4"), true));
@@ -533,6 +600,8 @@ function attachNav(){
 
 /* ===== サマリー更新 ===== */
 function updateSummaries(){
+  syncChoices();
+  invalidateResult();
   // シーン
   const scene = findById(state.db?.scenes, state.sceneId);
   const sceneEl = els.sumScene();
@@ -578,6 +647,11 @@ function updateSummaries(){
 
 // ナビゲーションボタンの有効/無効状態を更新
 function updateNavButtons(){
+  els.accHeaders().forEach(header => {
+    const enabled = Boolean(state.db) && SealCore.canEnter(state, Number(header.closest(".accordion").dataset.step));
+    header.disabled = !enabled;
+    header.setAttribute("aria-disabled", String(!enabled));
+  });
   const next1 = document.getElementById("next-1");
   const next2 = document.getElementById("next-2");
   const next3 = document.getElementById("next-3");
@@ -591,20 +665,20 @@ function updateNavButtons(){
   
   // ステップ2→3: シール選択が必須
   if (next2) {
-    next2.disabled = !state.sealId;
-    next2.classList.toggle("disabled", !state.sealId);
+    next2.disabled = !SealCore.canEnter(state, 3);
+    next2.classList.toggle("disabled", next2.disabled);
   }
   
   // ステップ3→4: 攻撃選択が必須（最低1つ）
   if (next3) {
-    const hasAttacks = state.attacks && state.attacks.length > 0;
+    const hasAttacks = SealCore.canEnter(state, 4);
     next3.disabled = !hasAttacks;
     next3.classList.toggle("disabled", !hasAttacks);
   }
   
   // ステップ4→5: 検査選択が必須（最低1つ）
   if (next4) {
-    const hasInspections = state.inspections && state.inspections.length > 0;
+    const hasInspections = SealCore.canEnter(state, 5);
     next4.disabled = !hasInspections;
     next4.classList.toggle("disabled", !hasInspections);
   }
@@ -679,6 +753,12 @@ function renderSealExtras(){
 
 /* ===== 結果の描画・アクション（refs/images ボタンは存在時のみ） ===== */
 function renderResult(){
+  if (!SealCore.buildGuide(state.db, state).complete) {
+    invalidateResult();
+    document.getElementById("app-status").textContent = t("incomplete");
+    return;
+  }
+  resultGenerated = true;
   // クリア
   els.resultBody().innerHTML = "";
   els.resultActions().innerHTML = "";
