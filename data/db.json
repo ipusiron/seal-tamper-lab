@@ -8,7 +8,15 @@
       "notes": "教育用の標準的なクラフト封筒を想定。",
       "refs": [],
       "images": [],
-      "meta": { "surface": "paper", "roughness": 0.6, "porosity": 0.7, "language": "ja" }
+      "meta": {
+        "surface": "paper",
+        "roughness": 0.6,
+        "porosity": 0.7,
+        "language": "ja"
+      },
+      "name_en": "Envelope (paper)",
+      "description_en": "Assumes a paper envelope. Observe fiber disturbance and density unevenness where light passes through.",
+      "notes_en": "Assumes a standard kraft envelope for educational use."
     },
     {
       "id": "scene-cardboard",
@@ -17,7 +25,15 @@
       "notes": "輸送用の段ボール箱を想定。",
       "refs": [],
       "images": [],
-      "meta": { "surface": "cardboard", "roughness": 0.8, "porosity": 0.5, "language": "ja" }
+      "meta": {
+        "surface": "cardboard",
+        "roughness": 0.8,
+        "porosity": 0.5,
+        "language": "ja"
+      },
+      "name_en": "Cardboard box",
+      "description_en": "Assumes a box with a paper surface layer. Observe surface damage and changes in the application position.",
+      "notes_en": "Assumes a cardboard box for shipping."
     },
     {
       "id": "scene-device",
@@ -26,7 +42,15 @@
       "notes": "保守口の封印や保証シールを想定。",
       "refs": [],
       "images": [],
-      "meta": { "surface": "plastic-metal", "roughness": 0.2, "porosity": 0.1, "language": "ja" }
+      "meta": {
+        "surface": "plastic-metal",
+        "roughness": 0.2,
+        "porosity": 0.1,
+        "language": "ja"
+      },
+      "name_en": "Device enclosure (metal/plastic)",
+      "description_en": "Assumes a metal or plastic surface. Observe application position, bubbles and surface changes.",
+      "notes_en": "Assumes a maintenance-port seal or a warranty sticker."
     }
   ],
   "seals": [
@@ -35,89 +59,204 @@
       "type": "VOID",
       "name": "VOIDパターンシール",
       "summary": "剥離により表示が変わるラベル。文字がラベル側に現れる非転着型と対象物側に残る型などがある。",
-      "strengths": ["剥離の痕跡を確認する手掛かりになる", "製品仕様に応じた表示変化を確認できる"],
-      "weaknesses": ["表示や残留物の状態だけでは未開封を証明できない", "温度条件で粘着挙動が変わる場合あり"],
+      "strengths": [
+        "剥離の痕跡を確認する手掛かりになる",
+        "製品仕様に応じた表示変化を確認できる"
+      ],
+      "weaknesses": [
+        "表示や残留物の状態だけでは未開封を証明できない",
+        "温度条件で粘着挙動が変わる場合あり"
+      ],
       "common_uses": "物流封印、機器の保守口封印、検査済み封印",
-		"refs": [
+      "refs": [
         {
           "type": "manufacturer page",
           "title": "Lintec Non-Transfer VOID Security Label Material",
           "url": "https://www.lintec.co.jp/topics/newsrelease/171017_a.html"
         }
       ],
-		"images": [],
-      "meta": { "hasSerial": true, "hasMicroprint": true, "thickness": 0.08, "adhesive": "acrylic" }
+      "images": [],
+      "meta": {
+        "hasSerial": true,
+        "hasMicroprint": true,
+        "thickness": 0.08,
+        "adhesive": "acrylic"
+      },
+      "name_en": "VOID-pattern seal",
+      "summary_en": "A label whose display changes on removal. There are non-transfer types where the text appears on the label side, and types where it remains on the object side.",
+      "strengths_en": [
+        "A clue for checking traces of removal",
+        "The display change can be checked according to the product specification"
+      ],
+      "weaknesses_en": [
+        "The display or residue state alone cannot prove the item is unopened",
+        "Adhesive behavior may change with temperature"
+      ],
+      "common_uses_en": "Logistics seals, maintenance-port seals on equipment, inspected-item seals"
     },
-	{
-	"id": "seal-holo",
-	"type": "HOLOGRAM",
-	"name": "ホログラムシール",
-	"summary": "光の回折・干渉で模様が変化する偽造防止シール。",
-	"strengths": ["真正な見本との比較に利用できる", "複製を難しくする設計がある", "角度による模様の変化を比較できる"],
-	"weaknesses": ["製品の構造や貼付条件によって耐性は異なる", "低品質な模倣シールが流通する", "利用者教育が必要"],
-	"common_uses": "保証封印、認証ステッカー、化粧品や医薬品のパッケージ、会員証など",
-	"refs": [],
-	"images": [],
-	"meta": { "hasSerial": false, "hasMicroprint": true }
-	},
+    {
+      "id": "seal-holo",
+      "type": "HOLOGRAM",
+      "name": "ホログラムシール",
+      "summary": "光の回折・干渉で模様が変化する偽造防止シール。",
+      "strengths": [
+        "真正な見本との比較に利用できる",
+        "複製を難しくする設計がある",
+        "角度による模様の変化を比較できる"
+      ],
+      "weaknesses": [
+        "製品の構造や貼付条件によって耐性は異なる",
+        "低品質な模倣シールが流通する",
+        "利用者教育が必要"
+      ],
+      "common_uses": "保証封印、認証ステッカー、化粧品や医薬品のパッケージ、会員証など",
+      "refs": [],
+      "images": [],
+      "meta": {
+        "hasSerial": false,
+        "hasMicroprint": true
+      },
+      "name_en": "Hologram seal",
+      "summary_en": "An anti-counterfeiting seal whose pattern changes through diffraction and interference of light.",
+      "strengths_en": [
+        "Can be used for comparison against a genuine sample",
+        "Has designs that make copying difficult",
+        "The change in pattern by angle can be compared"
+      ],
+      "weaknesses_en": [
+        "Resistance varies with the product structure and application conditions",
+        "Low-quality imitation seals circulate",
+        "User education is needed"
+      ],
+      "common_uses_en": "Warranty seals, authentication stickers, cosmetics and pharmaceutical packaging, membership cards, etc."
+    },
     {
       "id": "seal-paper",
       "type": "PAPER",
       "name": "紙封緘シール",
       "summary": "剥離時に紙繊維が損傷することがある封緘。紙や粘着剤の仕様によって挙動は異なる。",
-      "strengths": ["破断や繊維の変化を観察できる場合がある", "低コストの製品がある"],
-      "weaknesses": ["水蒸気や溶剤で糊が緩む場合あり", "痕跡が見当たらなくても貼付履歴は判断できない"],
+      "strengths": [
+        "破断や繊維の変化を観察できる場合がある",
+        "低コストの製品がある"
+      ],
+      "weaknesses": [
+        "水蒸気や溶剤で糊が緩む場合あり",
+        "痕跡が見当たらなくても貼付履歴は判断できない"
+      ],
       "common_uses": "公文書封緘、郵送封印",
       "refs": [],
       "images": [],
-      "meta": { "hasSerial": false, "hasMicroprint": false, "thickness": 0.1, "adhesive": "water-based" }
+      "meta": {
+        "hasSerial": false,
+        "hasMicroprint": false,
+        "thickness": 0.1,
+        "adhesive": "water-based"
+      },
+      "name_en": "Paper closure seal",
+      "summary_en": "A closure where paper fibers may be damaged on removal. Behavior varies with the paper and adhesive specification.",
+      "strengths_en": [
+        "Breakage or fiber change can sometimes be observed",
+        "Low-cost products exist"
+      ],
+      "weaknesses_en": [
+        "Glue may loosen with water vapor or solvents",
+        "Even with no visible trace, the application history cannot be judged"
+      ],
+      "common_uses_en": "Official-document closures, mail seals"
     },
     {
       "id": "seal-clear-tape",
       "type": "CLEAR",
       "name": "透明テープ（番号なし）",
       "summary": "一般的な透明テープ。低コストだが抑止力は限定的。",
-      "strengths": ["入手容易", "視認性が高く貼りやすい"],
-      "weaknesses": ["温度や貼付条件によって粘着状態が変わる", "連番なし＝追跡困難"],
+      "strengths": [
+        "入手容易",
+        "視認性が高く貼りやすい"
+      ],
+      "weaknesses": [
+        "温度や貼付条件によって粘着状態が変わる",
+        "連番なし＝追跡困難"
+      ],
       "common_uses": "簡易封印、仮止め",
       "refs": [],
       "images": [],
-      "meta": { "hasSerial": false, "hasMicroprint": false, "thickness": 0.05, "adhesive": "rubber" }
+      "meta": {
+        "hasSerial": false,
+        "hasMicroprint": false,
+        "thickness": 0.05,
+        "adhesive": "rubber"
+      },
+      "name_en": "Clear tape (no number)",
+      "summary_en": "Ordinary clear tape. Low cost, but its deterrent effect is limited.",
+      "strengths_en": [
+        "Easy to obtain",
+        "Highly visible and easy to apply"
+      ],
+      "weaknesses_en": [
+        "Adhesion changes with temperature and application conditions",
+        "No serial number means it is hard to track"
+      ],
+      "common_uses_en": "Simple seals, temporary fastening"
     },
     {
       "id": "seal-serial-tape",
       "type": "SERIAL_TAPE",
       "name": "連番入りセキュリティテープ",
       "summary": "印字連番で追跡できるテープ型封印。",
-      "strengths": ["連番照合で一致/不一致を判定", "運用ログと組み合わせやすい"],
-      "weaknesses": ["番号の一致だけでは貼付履歴は判断できない", "位置ズレや段差など、番号以外の確認も必要"],
+      "strengths": [
+        "連番照合で一致/不一致を判定",
+        "運用ログと組み合わせやすい"
+      ],
+      "weaknesses": [
+        "番号の一致だけでは貼付履歴は判断できない",
+        "位置ズレや段差など、番号以外の確認も必要"
+      ],
       "common_uses": "倉庫封印、輸送シール",
       "refs": [],
       "images": [],
-      "meta": { "hasSerial": true, "hasMicroprint": false, "thickness": 0.07, "adhesive": "acrylic" }
+      "meta": {
+        "hasSerial": true,
+        "hasMicroprint": false,
+        "thickness": 0.07,
+        "adhesive": "acrylic"
+      },
+      "name_en": "Serialized security tape",
+      "summary_en": "A tape-type seal that can be tracked by a printed serial number.",
+      "strengths_en": [
+        "Match or mismatch can be judged by serial comparison",
+        "Easy to combine with operation logs"
+      ],
+      "weaknesses_en": [
+        "A matching number alone cannot judge the application history",
+        "Checks other than the number, such as position shift and steps, are also needed"
+      ],
+      "common_uses_en": "Warehouse seals, shipping seals"
     }
   ],
   "attacks": [
-	{
-		"id": "atk-full-remove",
-		"name": "完全除去（削ぎ取り/溶剤/下地処理）",
-		"description": "シールと接着剤を含め、下地から痕跡ごと取り去る。",
-		"expected_effect": "下地の荒れや密度ムラが観察候補になる。見え方や痕跡の有無は材質と条件によって異なる。",
-		"characteristics": {
-			"cost": 3,
-			"time": 4,
-			"skill": 3,
-			"traces": 4
-		},
-		"refs": [
+    {
+      "id": "atk-full-remove",
+      "name": "完全除去（削ぎ取り/溶剤/下地処理）",
+      "description": "シールと接着剤を含め、下地から痕跡ごと取り去る。",
+      "expected_effect": "下地の荒れや密度ムラが観察候補になる。見え方や痕跡の有無は材質と条件によって異なる。",
+      "characteristics": {
+        "cost": 3,
+        "time": 4,
+        "skill": 3,
+        "traces": 4
+      },
+      "refs": [
         {
           "type": "paper",
           "title": "Tamper-Indicating Seals: Practices, Problems, and Standards (Johnston, 2003)",
           "url": "https://digital.library.unt.edu/ark:/67531/metadc933842/"
         }
       ],
-		"images": []
-	},
+      "images": [],
+      "name_en": "Full removal (shaving / solvent / surface prep)",
+      "description_en": "Removes the seal and adhesive, taking away the traces from the surface.",
+      "expected_effect_en": "Surface roughening and density unevenness become observation candidates. How it looks and whether traces remain depend on the material and conditions."
+    },
     {
       "id": "atk-same-reapply",
       "name": "同一シール再貼付（同ロット/連番一致）",
@@ -130,7 +269,10 @@
         "traces": 2
       },
       "refs": [],
-      "images": []
+      "images": [],
+      "name_en": "Re-applying the same seal (same lot / matching serial)",
+      "description_en": "A lesson on considering the possibility of resealing with a seal that looks like the same number. Even the same lot does not guarantee the same number.",
+      "expected_effect_en": "Besides the number, position, edges and adhesion state also become observation candidates. A trace does not necessarily occur."
     },
     {
       "id": "atk-heat-peel",
@@ -144,7 +286,10 @@
         "traces": 2
       },
       "refs": [],
-      "images": []
+      "images": [],
+      "name_en": "Peel with warm air and re-adhere",
+      "description_en": "A lesson on considering the adhesive state after a temperature change and the possibility of resealing.",
+      "expected_effect_en": "With clear tape and the like, micro bubbles and distortion tend to appear."
     },
     {
       "id": "atk-partial-cut",
@@ -158,7 +303,10 @@
         "traces": 3
       },
       "refs": [],
-      "images": []
+      "images": [],
+      "name_en": "Partial cut (notch then reposition)",
+      "description_en": "A lesson on considering the possibility that part of the seal was cut and the placement changed.",
+      "expected_effect_en": "Steps along the cut line, gloss differences and position shifts are detection points."
     },
     {
       "id": "atk-solvent-soften",
@@ -172,7 +320,10 @@
         "traces": 3
       },
       "refs": [],
-      "images": []
+      "images": [],
+      "name_en": "Soften the glue with solvent",
+      "description_en": "A lesson on considering the possibility that the adhesive or surface changed under the influence of chemicals.",
+      "expected_effect_en": "Solvent marks or a change in surface gloss may remain."
     },
     {
       "id": "atk-surface-disguise",
@@ -186,7 +337,10 @@
         "traces": 3
       },
       "refs": [],
-      "images": []
+      "images": [],
+      "name_en": "Surface disguise (polish/clean then re-apply)",
+      "description_en": "A lesson on considering the possibility that the surface state changed and a different seal was applied over it.",
+      "expected_effect_en": "Compare position and surface changes using a prior baseline photo or oblique-light observation. The difference is not necessarily distinguishable."
     }
   ],
   "inspections": [
@@ -194,95 +348,167 @@
       "id": "insp-oblique",
       "name": "斜光観察",
       "howto": "浅い角度の光で表面段差/気泡/歪みを強調する。",
-      "detects": ["edge_step", "micro_bubbles", "warp"],
+      "detects": [
+        "edge_step",
+        "micro_bubbles",
+        "warp"
+      ],
       "refs": [],
-      "images": []
+      "images": [],
+      "name_en": "Oblique-light observation",
+      "howto_en": "Use light at a shallow angle to emphasize surface steps, bubbles and distortion."
     },
     {
       "id": "insp-baseline-compare",
       "name": "基準写真比較",
       "howto": "貼付直後の写真と位置・角度を合わせて比較する。",
-      "detects": ["position_delta", "rotation_delta", "texture_change"],
+      "detects": [
+        "position_delta",
+        "rotation_delta",
+        "texture_change"
+      ],
       "refs": [],
-      "images": []
+      "images": [],
+      "name_en": "Baseline-photo comparison",
+      "howto_en": "Compare against a photo taken right after application, matching position and angle."
     },
     {
       "id": "insp-serial-check",
       "name": "連番照合",
       "howto": "運用ログと照合し、連番の一致/不一致を確認する。",
-      "detects": ["serial_mismatch", "unexpected_batch"],
+      "detects": [
+        "serial_mismatch",
+        "unexpected_batch"
+      ],
       "refs": [],
-      "images": []
+      "images": [],
+      "name_en": "Serial matching",
+      "howto_en": "Compare against the operation log to check whether the serial matches."
     },
     {
       "id": "insp-macro",
       "name": "マクロ観察（エッジ/繊維/接着ムラ）",
       "howto": "拡大レンズでエッジ段差や粘着剤のムラ、紙繊維の乱れを確認。",
-      "detects": ["edge_step", "adhesive_variation", "fiber_disorder"],
+      "detects": [
+        "edge_step",
+        "adhesive_variation",
+        "fiber_disorder"
+      ],
       "refs": [],
-      "images": []
+      "images": [],
+      "name_en": "Macro observation (edges / fibers / uneven adhesive)",
+      "howto_en": "Use a magnifier to check edge steps, uneven adhesive and disturbed paper fibers."
     },
     {
       "id": "insp-transmitted",
       "name": "透過光観察（紙系）",
       "howto": "薄い紙素材を透過光で観察し、密度ムラや剥離跡を確認。",
-      "detects": ["density_variation", "lift_marks"],
+      "detects": [
+        "density_variation",
+        "lift_marks"
+      ],
       "refs": [],
-      "images": []
+      "images": [],
+      "name_en": "Transmitted-light observation (paper)",
+      "howto_en": "Observe thin paper material with transmitted light to check density unevenness and lift marks."
     },
     {
       "id": "insp-uv",
       "name": "UV/IR 観察",
       "howto": "対応するインクや撮影機材がある場合に蛍光や近赤外の反射差を観察する。近赤外照明は温度分布を測る熱画像とは異なる。",
-      "detects": ["microprint_presence", "contamination_traces"],
-      "refs": [{"type":"manufacturer page","title":"Active IR and thermal imaging (FLIR)","url":"https://oem.flir.com/en-150/support/support-center/knowledge-base/what-is-the-difference-between-active-ir-and-thermal-imaging/"}],
-      "images": []
+      "detects": [
+        "microprint_presence",
+        "contamination_traces"
+      ],
+      "refs": [
+        {
+          "type": "manufacturer page",
+          "title": "Active IR and thermal imaging (FLIR)",
+          "url": "https://oem.flir.com/en-150/support/support-center/knowledge-base/what-is-the-difference-between-active-ir-and-thermal-imaging/"
+        }
+      ],
+      "images": [],
+      "name_en": "UV/IR observation",
+      "howto_en": "When suitable ink or imaging equipment is available, observe fluorescence or near-infrared reflectance differences. Near-infrared lighting is different from thermal imaging that measures temperature distribution."
     }
   ],
   "scenarios": [
-		{
-	"id": "scn-void-fullremove-reapply",
-	"title": "VOID → 完全除去 → 同一VOID再貼付（連番一致）",
-	"scene": "scene-envelope",
-	"seal": "seal-void",
-	"attackSequence": ["atk-full-remove", "atk-same-reapply"],
-	"recommendedInspections": ["insp-oblique", "insp-baseline-compare", "insp-macro"],
-	"lesson": "「連番一致＝未改ざん」は誤信。位置ズレ・段差・質感ムラで検証。",
-	"refs": [],
-	"images": []
-	},
+    {
+      "id": "scn-void-fullremove-reapply",
+      "title": "VOID → 完全除去 → 同一VOID再貼付（連番一致）",
+      "scene": "scene-envelope",
+      "seal": "seal-void",
+      "attackSequence": [
+        "atk-full-remove",
+        "atk-same-reapply"
+      ],
+      "recommendedInspections": [
+        "insp-oblique",
+        "insp-baseline-compare",
+        "insp-macro"
+      ],
+      "lesson": "「連番一致＝未改ざん」は誤信。位置ズレ・段差・質感ムラで検証。",
+      "refs": [],
+      "images": [],
+      "title_en": "VOID -> full removal -> re-apply the same VOID (matching serial)",
+      "lesson_en": "\"Matching serial = untampered\" is a false belief. Verify with position shift, steps and texture unevenness."
+    },
     {
       "id": "scn-paper-remove-new",
       "title": "紙封緘 → 完全除去 → 新規貼付",
       "scene": "scene-envelope",
       "seal": "seal-paper",
-      "attackSequence": ["atk-full-remove", "atk-surface-disguise"],
-      "recommendedInspections": ["insp-transmitted", "insp-oblique", "insp-baseline-compare"],
+      "attackSequence": [
+        "atk-full-remove",
+        "atk-surface-disguise"
+      ],
+      "recommendedInspections": [
+        "insp-transmitted",
+        "insp-oblique",
+        "insp-baseline-compare"
+      ],
       "lesson": "外観だけで貼付履歴は分からない。光が通る条件では透過光、事前の記録がある場合は基準写真を比較材料にする。",
       "refs": [],
-      "images": []
+      "images": [],
+      "title_en": "Paper closure -> full removal -> new application",
+      "lesson_en": "Appearance alone cannot tell the application history. Where light passes through, use transmitted light; where a prior record exists, use the baseline photo as a comparison."
     },
     {
       "id": "scn-clear-heat-reseal",
       "title": "透明テープ → 温風で剥がし再接着",
       "scene": "scene-device",
       "seal": "seal-clear-tape",
-      "attackSequence": ["atk-heat-peel"],
-      "recommendedInspections": ["insp-oblique", "insp-macro"],
+      "attackSequence": [
+        "atk-heat-peel"
+      ],
+      "recommendedInspections": [
+        "insp-oblique",
+        "insp-macro"
+      ],
       "lesson": "価格だけで性能は判断できない。微小気泡や歪みを観察候補とし、製品と貼付面の条件も確かめる。",
       "refs": [],
-      "images": []
+      "images": [],
+      "title_en": "Clear tape -> peel with warm air and re-adhere",
+      "lesson_en": "Price alone cannot judge performance. Treat micro bubbles and distortion as observation candidates, and also check the product and the application surface conditions."
     },
     {
       "id": "scn-serial-tape-insider",
       "title": "連番テープ → 内部流出シナリオ（同一連番で再封印）",
       "scene": "scene-cardboard",
       "seal": "seal-serial-tape",
-      "attackSequence": ["atk-same-reapply"],
-      "recommendedInspections": ["insp-baseline-compare", "insp-oblique", "insp-serial-check"],
+      "attackSequence": [
+        "atk-same-reapply"
+      ],
+      "recommendedInspections": [
+        "insp-baseline-compare",
+        "insp-oblique",
+        "insp-serial-check"
+      ],
       "lesson": "連番一致でも位置・角度・エッジ段差を検査。連番ログと照合が必須。",
       "refs": [],
-      "images": []
+      "images": [],
+      "title_en": "Serial tape -> insider-leak scenario (reseal with the same serial)",
+      "lesson_en": "Even with a matching serial, inspect position, angle and edge steps. Comparison with the serial log is essential."
     }
   ]
 }
