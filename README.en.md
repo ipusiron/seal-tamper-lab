@@ -67,6 +67,12 @@ Limitations are shown for serial-number checks on unnumbered seals and transmitt
 
 ## 💡 Use cases
 
+Ways of using this tool in particular
+
+- Confirming that you cannot move on without finishing the previous step (procedure and prerequisite classes): asking for a guide with nothing selected lists four missing things in order, the scene, the seal, the attacks and the inspections. Until an attack is selected you cannot reach the inspection step (the 4th). You can confirm, from the locked steps, that inspection has an order and prerequisites and you cannot skip ahead
+- Confirming that an inspection has a precondition for its target, and shows "cannot be applied" when it does not fit (inspection-planning classes): selecting a serial-number check for unnumbered clear tape shows the reason it cannot apply (noSerial). Selecting transmitted-light observation for a cardboard box gives the reason the light does not pass through (opaqueSurface). You can confirm, by combination, that no inspection is universal and that a mismatch with the target gives "not applicable" rather than a result
+- Confirming that one inspection looks for several signs (detection-design classes): the serial-number check looks for two signs, a serial mismatch (serial_mismatch) and an unexpected batch (unexpected_batch). You can confirm, from the inspection-to-sign mapping, that one inspection picks up several traces of tampering while one trace is corroborated by several inspections
+
 In training or classes, use the tool to discuss how the same observation can have multiple causes and how inspections depend on records and equipment. For example, selecting unnumbered clear tape and a serial-number check displays why that inspection cannot be applied.
 
 In workshops, participants can explain what they would check under the selected conditions and what they could not conclude. The tool does not support tampering competitions or detection-rate scoring. It is not a replacement for inspecting real objects, organizational inspection procedures, or expert examination.
