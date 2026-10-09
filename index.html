@@ -12,43 +12,44 @@
 </head>
 <body>
   <header class="site-header">
+    <button id="langToggle" class="lang-toggle" aria-label="Switch language">EN</button>
     <h1>Seal Tamper Lab</h1>
-    <p class="subtitle">封印シールの脆弱性と検知技術を学ぶ教育ツール</p>
+    <p class="subtitle" data-i18n="ui.subtitle">封印シールの脆弱性と検知技術を学ぶ教育ツール</p>
   </header>
 
   <main id="app" class="container">
-    <p class="notice">封印の観察候補と検査の限界を学ぶ教材です。実物の改ざん判定や検知率の計算は行いません。実物の検査は所有者の許可と安全な手順のもとで行ってください。</p>
+    <p class="notice" data-i18n="ui.notice">封印の観察候補と検査の限界を学ぶ教材です。実物の改ざん判定や検知率の計算は行いません。実物の検査は所有者の許可と安全な手順のもとで行ってください。</p>
     <p id="app-status" role="status" aria-live="polite">教材データを読み込んでいます。</p>
     <div class="utility-actions">
-      <button class="btn" id="retry-load" type="button" hidden>読み込みを再試行</button>
-      <button class="btn" id="reset-all" type="button" disabled>選択と結果を消す</button>
+      <button class="btn" id="retry-load" type="button" hidden data-i18n="ui.retryLoad">読み込みを再試行</button>
+      <button class="btn" id="reset-all" type="button" disabled data-i18n="ui.resetAll">選択と結果を消す</button>
     </div>
-    <noscript>この教材の操作にはJavaScriptが必要です。</noscript>
+    <noscript data-i18n="ui.noscript">この教材の操作にはJavaScriptが必要です。</noscript>
     <!-- ステップインジケータ -->
-    <ol class="stepper" aria-label="進行ステップ">
-      <li class="active" data-step="1">シーン</li>
-      <li data-step="2">シール</li>
-      <li data-step="3">攻撃</li>
-      <li data-step="4">検査</li>
-      <li data-step="5">結果</li>
+    <ol class="stepper" aria-label="進行ステップ" data-i18n-attr="aria-label:ui.stepperLabel">
+      <li class="active" data-step="1" data-i18n="ui.step1">シーン</li>
+      <li data-step="2" data-i18n="ui.step2">シール</li>
+      <li data-step="3" data-i18n="ui.step3">攻撃</li>
+      <li data-step="4" data-i18n="ui.step4">検査</li>
+      <li data-step="5" data-i18n="ui.step5">結果</li>
     </ol>
 
     <!-- ステップ1：シーン -->
     <section class="accordion" id="step-1" data-step="1">
       <button class="acc-header" aria-expanded="true" aria-controls="panel-1">
-        <span class="acc-title">ステップ1：シーン選択</span>
+        <span class="acc-title" data-i18n="ui.accScene">ステップ1：シーン選択</span>
         <span class="acc-summary" id="summary-scene"></span>
       </button>
       <div id="panel-1" class="acc-panel">
         <div class="card">
-          <p class="hint">封筒・段ボール・機器筐体など、対象物の表面特性を選びます。</p>
-          <div id="scene-cards" class="scene-card-grid" role="radiogroup" aria-label="シーンを選択">
+          <p class="hint" data-i18n="ui.hintScene">封筒・段ボール・機器筐体など、対象物の表面特性を選びます。</p>
+          <div id="scene-cards" class="scene-card-grid" role="radiogroup" aria-label="シーンを選択" data-i18n-attr="aria-label:ui.sceneRadioLabel">
             <!-- カード型UIがJavaScriptで動的に生成される -->
           </div>
         </div>
 
         <div class="nav-row">
-          <button class="btn next" id="next-1">次へ（シール）</button>
+          <button class="btn next" id="next-1" data-i18n="ui.next1">次へ（シール）</button>
         </div>
       </div>
     </section>
@@ -56,21 +57,21 @@
     <!-- ステップ2：シール -->
     <section class="accordion" id="step-2" data-step="2">
       <button class="acc-header" aria-expanded="false" aria-controls="panel-2">
-        <span class="acc-title">ステップ2：シール選択</span>
+        <span class="acc-title" data-i18n="ui.accSeal">ステップ2：シール選択</span>
         <span class="acc-summary" id="summary-seal"></span>
       </button>
       <div id="panel-2" class="acc-panel" hidden>
         <div class="card">
-          <p class="hint">VOID、ホログラム、紙封緘、透明テープなどから選びます。</p>
-          <div id="seal-cards" class="seal-card-grid" role="radiogroup" aria-label="シールを選択">
+          <p class="hint" data-i18n="ui.hintSeal">VOID、ホログラム、紙封緘、透明テープなどから選びます。</p>
+          <div id="seal-cards" class="seal-card-grid" role="radiogroup" aria-label="シールを選択" data-i18n-attr="aria-label:ui.sealRadioLabel">
             <!-- カード型UIがJavaScriptで動的に生成される -->
           </div>
           <div id="seal-extras" class="extras"></div>
         </div>
 
         <div class="nav-row">
-          <button class="btn prev" id="prev-2">戻る</button>
-          <button class="btn next" id="next-2">次へ（攻撃）</button>
+          <button class="btn prev" id="prev-2" data-i18n="ui.prev">戻る</button>
+          <button class="btn next" id="next-2" data-i18n="ui.next2">次へ（攻撃）</button>
         </div>
       </div>
     </section>
@@ -78,21 +79,21 @@
     <!-- ステップ3：攻撃 -->
     <section class="accordion" id="step-3" data-step="3">
       <button class="acc-header" aria-expanded="false" aria-controls="panel-3">
-        <span class="acc-title">ステップ3：攻撃（Tampering）</span>
+        <span class="acc-title" data-i18n="ui.accAttack">ステップ3：攻撃（Tampering）</span>
         <span class="acc-summary" id="summary-attacks"></span>
       </button>
       <div id="panel-3" class="acc-panel" hidden>
         <div class="card">
-          <p class="hint">想定する改変を選びます（複数可）。数値はコスト・時間・技術・痕跡の目立ちやすさを考えるための教材上の仮定（1＝低、5＝高）であり、実測値や発覚確率ではありません。</p>
-          <div id="attack-cards" class="attack-card-grid" role="group" aria-label="攻撃手法を選択（複数可）">
+          <p class="hint" data-i18n="ui.hintAttack">想定する改変を選びます（複数可）。数値はコスト・時間・技術・痕跡の目立ちやすさを考えるための教材上の仮定（1＝低、5＝高）であり、実測値や発覚確率ではありません。</p>
+          <div id="attack-cards" class="attack-card-grid" role="group" aria-label="攻撃手法を選択（複数可）" data-i18n-attr="aria-label:ui.attackGroupLabel">
             <!-- カード型UIがJavaScriptで動的に生成される -->
           </div>
           <div id="attack-chips" class="chips" aria-live="polite"></div>
         </div>
 
         <div class="nav-row">
-          <button class="btn prev" id="prev-3">戻る</button>
-          <button class="btn next" id="next-3">次へ（検査）</button>
+          <button class="btn prev" id="prev-3" data-i18n="ui.prev">戻る</button>
+          <button class="btn next" id="next-3" data-i18n="ui.next3">次へ（検査）</button>
         </div>
       </div>
     </section>
@@ -100,21 +101,21 @@
     <!-- ステップ4：検査 -->
     <section class="accordion" id="step-4" data-step="4">
       <button class="acc-header" aria-expanded="false" aria-controls="panel-4">
-        <span class="acc-title">ステップ4：検査（Inspection）</span>
+        <span class="acc-title" data-i18n="ui.accInspection">ステップ4：検査（Inspection）</span>
         <span class="acc-summary" id="summary-inspections"></span>
       </button>
       <div id="panel-4" class="acc-panel" hidden>
         <div class="card">
-          <p class="hint">斜光観察・基準写真比較・連番照合などを選択（複数可）。</p>
-          <div id="inspection-cards" class="inspection-card-grid" role="group" aria-label="検査手法を選択（複数可）">
+          <p class="hint" data-i18n="ui.hintInspection">斜光観察・基準写真比較・連番照合などを選択（複数可）。</p>
+          <div id="inspection-cards" class="inspection-card-grid" role="group" aria-label="検査手法を選択（複数可）" data-i18n-attr="aria-label:ui.inspectionGroupLabel">
             <!-- カード型UIがJavaScriptで動的に生成される -->
           </div>
           <div id="inspection-chips" class="chips" aria-live="polite"></div>
         </div>
 
         <div class="nav-row">
-          <button class="btn prev" id="prev-4">戻る</button>
-          <button class="btn next" id="next-4">次へ（結果）</button>
+          <button class="btn prev" id="prev-4" data-i18n="ui.prev">戻る</button>
+          <button class="btn next" id="next-4" data-i18n="ui.next4">次へ（結果）</button>
         </div>
       </div>
     </section>
@@ -122,13 +123,13 @@
     <!-- ステップ5：結果・解説 -->
     <section class="accordion" id="step-5" data-step="5">
       <button class="acc-header" aria-expanded="false" aria-controls="panel-5">
-        <span class="acc-title">ステップ5：確認ポイントと限界</span>
+        <span class="acc-title" data-i18n="ui.accResult">ステップ5：確認ポイントと限界</span>
         <span class="acc-summary" id="summary-result"></span>
       </button>
       <div id="panel-5" class="acc-panel" hidden>
         <div id="result-card" class="card">
           <div id="result-body" class="result-body">
-            <p class="hint">上のステップで選択すると、ここに解説が表示されます。</p>
+            <p class="hint" data-i18n="ui.resultPlaceholder">上のステップで選択すると、ここに解説が表示されます。</p>
           </div>
 
           <div class="actions" id="result-actions"></div>
@@ -139,27 +140,27 @@
         </div>
 
         <div class="nav-row">
-          <button class="btn prev" id="prev-5">戻る</button>
+          <button class="btn prev" id="prev-5" data-i18n="ui.prev">戻る</button>
         </div>
       </div>
     </section>
 
     <!-- 初期ガイド（DB未読込時の空表示） -->
     <section id="starter-guide" class="card muted">
-      <h3>使い方ミニガイド</h3>
+      <h3 data-i18n="ui.starterTitle">使い方ミニガイド</h3>
       <ol>
-        <li>シーンを選ぶ（封筒・箱など）</li>
-        <li>シールを選ぶ（VOID・ホログラム・紙封緘・透明テープなど）</li>
-        <li>攻撃を選ぶ（完全除去・再貼付など）</li>
-        <li>検査を選ぶ（斜光・基準写真比較・連番照合など）</li>
-        <li>結果・解説で学びポイントを確認</li>
+        <li data-i18n="ui.starter1">シーンを選ぶ（封筒・箱など）</li>
+        <li data-i18n="ui.starter2">シールを選ぶ（VOID・ホログラム・紙封緘・透明テープなど）</li>
+        <li data-i18n="ui.starter3">攻撃を選ぶ（完全除去・再貼付など）</li>
+        <li data-i18n="ui.starter4">検査を選ぶ（斜光・基準写真比較・連番照合など）</li>
+        <li data-i18n="ui.starter5">結果・解説で学びポイントを確認</li>
       </ol>
     </section>
   </main>
 
   <footer class="site-footer">
     <div class="footer">
-      🔗 GitHubリポジトリはこちら（
+      <span data-i18n="ui.footerRepo">🔗 GitHubリポジトリはこちら</span>（
       <a href="https://github.com/ipusiron/seal-tamper-lab" target="_blank" rel="noopener noreferrer">
         ipusiron/seal-tamper-lab
       </a> ）
@@ -168,6 +169,7 @@
 
   <script src="seal-core.js"></script>
   <script src="seal-messages.js"></script>
+  <script src="i18n.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

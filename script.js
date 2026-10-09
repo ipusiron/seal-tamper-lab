@@ -8,8 +8,31 @@ const state = {
   attacks: [],
   inspections: [],
 };
-const t = key => SealMessages[key];
+const t = key => {
+  const m = globalThis.SealMessages || {};
+  const lang = (globalThis.I18N && globalThis.I18N.lang) || "ja";
+  const d = m[lang] || m.ja || {};
+  return (d[key] != null) ? d[key] : key;
+};
 let resultGenerated = false;
+
+// 教材データの文言を現在の言語にする。英語のときは *_en を基底キーへ写した複製を返す。
+function localizeDb(db) {
+  const lang = (globalThis.I18N && globalThis.I18N.lang) || "ja";
+  if (!db || lang === "ja") return db;
+  const clone = structuredClone(db);
+  const walk = node => {
+    if (Array.isArray(node)) { node.forEach(walk); return; }
+    if (node && typeof node === "object") {
+      for (const k of Object.keys(node)) {
+        if (k.endsWith("_en") && node[k] != null) node[k.slice(0, -3)] = node[k];
+      }
+      for (const k of Object.keys(node)) walk(node[k]);
+    }
+  };
+  walk(clone);
+  return clone;
+}
 
 const els = {
   stepper: () => document.querySelectorAll(".stepper li"),
@@ -92,7 +115,8 @@ async function loadDatabase() {
     if (!SealCore.validateDatabase(database)) {
       throw new Error("Invalid database format");
     }
-    state.db = database;
+    state.rawDb = database;
+    state.db = localizeDb(database);
     
     populateSelects();
     // DBが読めたらガイドを薄く
@@ -594,8 +618,8 @@ function updateNavButtons(){
 
 function chipsSummary(list){
   if (!list.length) return "";
-  if (list.length <= 3) return list.join("・");
-  return `${list.slice(0,3).join("・")} ${t("otherCount")} ${list.length - 3} ${t("count")}`;
+  if (list.length <= 3) return list.join(t("listSeparator"));
+  return `${list.slice(0,3).join(t("listSeparator"))} ${t("otherCount")} ${list.length - 3} ${t("count")}`;
 }
 
 /* ===== ピル描画 ===== */
@@ -699,7 +723,7 @@ function renderResult(){
   for (const { item, condition } of guide.inspections) {
     const section = node("section", undefined, "inspection-guide");
     section.append(node("h4", item.name), node("p", item.howto));
-    section.append(node("p", t("observePrefix") + (item.detects || []).map(key => t(key) || key).join("・")));
+    section.append(node("p", t("observePrefix") + (item.detects || []).map(key => t(key) || key).join(t("listSeparator"))));
     section.append(node("p", t(condition), "notice"));
     root.appendChild(section);
   }
@@ -708,7 +732,7 @@ function renderResult(){
   for (const { item, additionalInspections } of guide.scenarios) {
     root.append(node("h4", item.title), node("p", item.lesson));
     if (additionalInspections.length) root.appendChild(node("p", t("additionalPrefix") +
-      additionalInspections.map(id => findById(state.db.inspections, id).name).join("・")));
+      additionalInspections.map(id => findById(state.db.inspections, id).name).join(t("listSeparator"))));
   }
   root.appendChild(node("p", t("finalLimit"), "notice"));
 
@@ -773,6 +797,22 @@ function showImages(title, images){
 
 function findById(list, id){
   return (list || []).find(x => x.id === id);
+}
+
+/* 言語が変わったら、文言とカード・結果を今の言語で作り直す */
+if (globalThis.I18N && typeof globalThis.I18N.onChange === "function") {
+  globalThis.I18N.onChange(() => {
+    if (!state.rawDb) return;
+    state.db = localizeDb(state.rawDb);
+    populateSelects();
+    syncChoices();
+    renderAttackChips();
+    renderInspectionChips();
+    renderSealExtras();
+    updateSummaries();
+    if (resultGenerated) renderResult();
+    document.getElementById("app-status").textContent = resultGenerated ? t("resultReady") : t("ready");
+  });
 }
 
 /* 起動 */

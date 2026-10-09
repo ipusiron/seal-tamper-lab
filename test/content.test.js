@@ -3,7 +3,7 @@ const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
 const core = require("../seal-core.js");
-const messages = require("../seal-messages.js");
+const messages = require("../seal-messages.js").ja;
 const db = require("../data/db.json");
 const read = file => fs.readFileSync(path.join(__dirname, "..", file), "utf8");
 
